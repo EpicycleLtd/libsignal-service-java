@@ -69,11 +69,6 @@ message CallMessage {
   optional Busy      busy      = 5;
 }
 
-message PredefinedAnswers {
-    optional uint32 type = 1;
-    optional string data = 2;
-}
-
 message DataMessage {
   enum Flags {
     END_SESSION             = 1;
@@ -88,7 +83,6 @@ message DataMessage {
   optional uint32             expireTimer = 5;
   optional bytes              profileKey  = 6;
   optional uint64             timestamp   = 7;
-  optional PredefinedAnswers  pa          = 20;
 }
 
 message NullMessage {

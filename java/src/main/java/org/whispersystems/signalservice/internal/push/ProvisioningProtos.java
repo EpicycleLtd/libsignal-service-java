@@ -8,10 +8,10 @@ public final class ProvisioningProtos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface ProvisionEnvelopeOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:signalservice.ProvisionEnvelope)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ProvisionEnvelopeOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional bytes publicKey = 1;
     /**
      * <code>optional bytes publicKey = 1;</code>
      */
@@ -21,6 +21,7 @@ public final class ProvisioningProtos {
      */
     com.google.protobuf.ByteString getPublicKey();
 
+    // optional bytes body = 2;
     /**
      * <code>optional bytes body = 2;</code>
      *
@@ -42,9 +43,8 @@ public final class ProvisioningProtos {
    * Protobuf type {@code signalservice.ProvisionEnvelope}
    */
   public static final class ProvisionEnvelope extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:signalservice.ProvisionEnvelope)
-      ProvisionEnvelopeOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ProvisionEnvelopeOrBuilder {
     // Use ProvisionEnvelope.newBuilder() to construct.
     private ProvisionEnvelope(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -140,6 +140,7 @@ public final class ProvisioningProtos {
     }
 
     private int bitField0_;
+    // optional bytes publicKey = 1;
     public static final int PUBLICKEY_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString publicKey_;
     /**
@@ -155,6 +156,7 @@ public final class ProvisioningProtos {
       return publicKey_;
     }
 
+    // optional bytes body = 2;
     public static final int BODY_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString body_;
     /**
@@ -185,8 +187,7 @@ public final class ProvisioningProtos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -300,9 +301,8 @@ public final class ProvisioningProtos {
      * Protobuf type {@code signalservice.ProvisionEnvelope}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:signalservice.ProvisionEnvelope)
-        org.whispersystems.signalservice.internal.push.ProvisioningProtos.ProvisionEnvelopeOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.whispersystems.signalservice.internal.push.ProvisioningProtos.ProvisionEnvelopeOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.whispersystems.signalservice.internal.push.ProvisioningProtos.internal_static_signalservice_ProvisionEnvelope_descriptor;
@@ -424,6 +424,7 @@ public final class ProvisioningProtos {
       }
       private int bitField0_;
 
+      // optional bytes publicKey = 1;
       private com.google.protobuf.ByteString publicKey_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes publicKey = 1;</code>
@@ -459,6 +460,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional bytes body = 2;
       private com.google.protobuf.ByteString body_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes body = 2;</code>
@@ -521,10 +523,10 @@ public final class ProvisioningProtos {
     // @@protoc_insertion_point(class_scope:signalservice.ProvisionEnvelope)
   }
 
-  public interface ProvisionMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:signalservice.ProvisionMessage)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ProvisionMessageOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional bytes identityKeyPublic = 1;
     /**
      * <code>optional bytes identityKeyPublic = 1;</code>
      */
@@ -534,6 +536,7 @@ public final class ProvisioningProtos {
      */
     com.google.protobuf.ByteString getIdentityKeyPublic();
 
+    // optional bytes identityKeyPrivate = 2;
     /**
      * <code>optional bytes identityKeyPrivate = 2;</code>
      */
@@ -543,6 +546,7 @@ public final class ProvisioningProtos {
      */
     com.google.protobuf.ByteString getIdentityKeyPrivate();
 
+    // optional string number = 3;
     /**
      * <code>optional string number = 3;</code>
      */
@@ -557,6 +561,7 @@ public final class ProvisioningProtos {
     com.google.protobuf.ByteString
         getNumberBytes();
 
+    // optional string provisioningCode = 4;
     /**
      * <code>optional string provisioningCode = 4;</code>
      */
@@ -571,6 +576,7 @@ public final class ProvisioningProtos {
     com.google.protobuf.ByteString
         getProvisioningCodeBytes();
 
+    // optional string userAgent = 5;
     /**
      * <code>optional string userAgent = 5;</code>
      */
@@ -585,6 +591,7 @@ public final class ProvisioningProtos {
     com.google.protobuf.ByteString
         getUserAgentBytes();
 
+    // optional bytes profileKey = 6;
     /**
      * <code>optional bytes profileKey = 6;</code>
      */
@@ -594,6 +601,7 @@ public final class ProvisioningProtos {
      */
     com.google.protobuf.ByteString getProfileKey();
 
+    // optional bool readReceipts = 7;
     /**
      * <code>optional bool readReceipts = 7;</code>
      */
@@ -607,9 +615,8 @@ public final class ProvisioningProtos {
    * Protobuf type {@code signalservice.ProvisionMessage}
    */
   public static final class ProvisionMessage extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:signalservice.ProvisionMessage)
-      ProvisionMessageOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ProvisionMessageOrBuilder {
     // Use ProvisionMessage.newBuilder() to construct.
     private ProvisionMessage(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -666,21 +673,18 @@ public final class ProvisioningProtos {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              number_ = bs;
+              number_ = input.readBytes();
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              provisioningCode_ = bs;
+              provisioningCode_ = input.readBytes();
               break;
             }
             case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              userAgent_ = bs;
+              userAgent_ = input.readBytes();
               break;
             }
             case 50: {
@@ -733,6 +737,7 @@ public final class ProvisioningProtos {
     }
 
     private int bitField0_;
+    // optional bytes identityKeyPublic = 1;
     public static final int IDENTITYKEYPUBLIC_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString identityKeyPublic_;
     /**
@@ -748,6 +753,7 @@ public final class ProvisioningProtos {
       return identityKeyPublic_;
     }
 
+    // optional bytes identityKeyPrivate = 2;
     public static final int IDENTITYKEYPRIVATE_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString identityKeyPrivate_;
     /**
@@ -763,6 +769,7 @@ public final class ProvisioningProtos {
       return identityKeyPrivate_;
     }
 
+    // optional string number = 3;
     public static final int NUMBER_FIELD_NUMBER = 3;
     private java.lang.Object number_;
     /**
@@ -805,6 +812,7 @@ public final class ProvisioningProtos {
       }
     }
 
+    // optional string provisioningCode = 4;
     public static final int PROVISIONINGCODE_FIELD_NUMBER = 4;
     private java.lang.Object provisioningCode_;
     /**
@@ -847,6 +855,7 @@ public final class ProvisioningProtos {
       }
     }
 
+    // optional string userAgent = 5;
     public static final int USERAGENT_FIELD_NUMBER = 5;
     private java.lang.Object userAgent_;
     /**
@@ -889,6 +898,7 @@ public final class ProvisioningProtos {
       }
     }
 
+    // optional bytes profileKey = 6;
     public static final int PROFILEKEY_FIELD_NUMBER = 6;
     private com.google.protobuf.ByteString profileKey_;
     /**
@@ -904,6 +914,7 @@ public final class ProvisioningProtos {
       return profileKey_;
     }
 
+    // optional bool readReceipts = 7;
     public static final int READRECEIPTS_FIELD_NUMBER = 7;
     private boolean readReceipts_;
     /**
@@ -931,8 +942,7 @@ public final class ProvisioningProtos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1081,9 +1091,8 @@ public final class ProvisioningProtos {
      * Protobuf type {@code signalservice.ProvisionMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:signalservice.ProvisionMessage)
-        org.whispersystems.signalservice.internal.push.ProvisioningProtos.ProvisionMessageOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.whispersystems.signalservice.internal.push.ProvisioningProtos.ProvisionMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.whispersystems.signalservice.internal.push.ProvisioningProtos.internal_static_signalservice_ProvisionMessage_descriptor;
@@ -1256,6 +1265,7 @@ public final class ProvisioningProtos {
       }
       private int bitField0_;
 
+      // optional bytes identityKeyPublic = 1;
       private com.google.protobuf.ByteString identityKeyPublic_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes identityKeyPublic = 1;</code>
@@ -1291,6 +1301,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional bytes identityKeyPrivate = 2;
       private com.google.protobuf.ByteString identityKeyPrivate_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes identityKeyPrivate = 2;</code>
@@ -1326,6 +1337,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional string number = 3;
       private java.lang.Object number_ = "";
       /**
        * <code>optional string number = 3;</code>
@@ -1339,12 +1351,9 @@ public final class ProvisioningProtos {
       public java.lang.String getNumber() {
         java.lang.Object ref = number_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            number_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          number_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1402,6 +1411,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional string provisioningCode = 4;
       private java.lang.Object provisioningCode_ = "";
       /**
        * <code>optional string provisioningCode = 4;</code>
@@ -1415,12 +1425,9 @@ public final class ProvisioningProtos {
       public java.lang.String getProvisioningCode() {
         java.lang.Object ref = provisioningCode_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            provisioningCode_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          provisioningCode_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1478,6 +1485,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional string userAgent = 5;
       private java.lang.Object userAgent_ = "";
       /**
        * <code>optional string userAgent = 5;</code>
@@ -1491,12 +1499,9 @@ public final class ProvisioningProtos {
       public java.lang.String getUserAgent() {
         java.lang.Object ref = userAgent_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            userAgent_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          userAgent_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1554,6 +1559,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional bytes profileKey = 6;
       private com.google.protobuf.ByteString profileKey_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes profileKey = 6;</code>
@@ -1589,6 +1595,7 @@ public final class ProvisioningProtos {
         return this;
       }
 
+      // optional bool readReceipts = 7;
       private boolean readReceipts_ ;
       /**
        * <code>optional bool readReceipts = 7;</code>
@@ -1632,12 +1639,12 @@ public final class ProvisioningProtos {
     // @@protoc_insertion_point(class_scope:signalservice.ProvisionMessage)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_signalservice_ProvisionEnvelope_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_signalservice_ProvisionEnvelope_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_signalservice_ProvisionMessage_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -1662,29 +1669,29 @@ public final class ProvisioningProtos {
       "ProvisioningProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_signalservice_ProvisionEnvelope_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_signalservice_ProvisionEnvelope_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_signalservice_ProvisionEnvelope_descriptor,
+              new java.lang.String[] { "PublicKey", "Body", });
+          internal_static_signalservice_ProvisionMessage_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_signalservice_ProvisionMessage_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_signalservice_ProvisionMessage_descriptor,
+              new java.lang.String[] { "IdentityKeyPublic", "IdentityKeyPrivate", "Number", "ProvisioningCode", "UserAgent", "ProfileKey", "ReadReceipts", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_signalservice_ProvisionEnvelope_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_signalservice_ProvisionEnvelope_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_signalservice_ProvisionEnvelope_descriptor,
-        new java.lang.String[] { "PublicKey", "Body", });
-    internal_static_signalservice_ProvisionMessage_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_signalservice_ProvisionMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_signalservice_ProvisionMessage_descriptor,
-        new java.lang.String[] { "IdentityKeyPublic", "IdentityKeyPrivate", "Number", "ProvisioningCode", "UserAgent", "ProfileKey", "ReadReceipts", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
