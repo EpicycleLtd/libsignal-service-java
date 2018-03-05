@@ -8,10 +8,10 @@ public final class WebSocketProtos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface WebSocketRequestMessageOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface WebSocketRequestMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:signalservice.WebSocketRequestMessage)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string verb = 1;
     /**
      * <code>optional string verb = 1;</code>
      */
@@ -26,7 +26,6 @@ public final class WebSocketProtos {
     com.google.protobuf.ByteString
         getVerbBytes();
 
-    // optional string path = 2;
     /**
      * <code>optional string path = 2;</code>
      */
@@ -41,7 +40,6 @@ public final class WebSocketProtos {
     com.google.protobuf.ByteString
         getPathBytes();
 
-    // optional bytes body = 3;
     /**
      * <code>optional bytes body = 3;</code>
      */
@@ -51,12 +49,11 @@ public final class WebSocketProtos {
      */
     com.google.protobuf.ByteString getBody();
 
-    // repeated string headers = 5;
     /**
      * <code>repeated string headers = 5;</code>
      */
-    java.util.List<java.lang.String>
-    getHeadersList();
+    com.google.protobuf.ProtocolStringList
+        getHeadersList();
     /**
      * <code>repeated string headers = 5;</code>
      */
@@ -71,7 +68,6 @@ public final class WebSocketProtos {
     com.google.protobuf.ByteString
         getHeadersBytes(int index);
 
-    // optional uint64 id = 4;
     /**
      * <code>optional uint64 id = 4;</code>
      */
@@ -85,8 +81,9 @@ public final class WebSocketProtos {
    * Protobuf type {@code signalservice.WebSocketRequestMessage}
    */
   public static final class WebSocketRequestMessage extends
-      com.google.protobuf.GeneratedMessage
-      implements WebSocketRequestMessageOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:signalservice.WebSocketRequestMessage)
+      WebSocketRequestMessageOrBuilder {
     // Use WebSocketRequestMessage.newBuilder() to construct.
     private WebSocketRequestMessage(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -133,13 +130,15 @@ public final class WebSocketProtos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              verb_ = input.readBytes();
+              verb_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              path_ = input.readBytes();
+              path_ = bs;
               break;
             }
             case 26: {
@@ -153,11 +152,12 @@ public final class WebSocketProtos {
               break;
             }
             case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 headers_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000008;
               }
-              headers_.add(input.readBytes());
+              headers_.add(bs);
               break;
             }
           }
@@ -169,7 +169,7 @@ public final class WebSocketProtos {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-          headers_ = new com.google.protobuf.UnmodifiableLazyStringList(headers_);
+          headers_ = headers_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -203,7 +203,6 @@ public final class WebSocketProtos {
     }
 
     private int bitField0_;
-    // optional string verb = 1;
     public static final int VERB_FIELD_NUMBER = 1;
     private java.lang.Object verb_;
     /**
@@ -246,7 +245,6 @@ public final class WebSocketProtos {
       }
     }
 
-    // optional string path = 2;
     public static final int PATH_FIELD_NUMBER = 2;
     private java.lang.Object path_;
     /**
@@ -289,7 +287,6 @@ public final class WebSocketProtos {
       }
     }
 
-    // optional bytes body = 3;
     public static final int BODY_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString body_;
     /**
@@ -305,13 +302,12 @@ public final class WebSocketProtos {
       return body_;
     }
 
-    // repeated string headers = 5;
     public static final int HEADERS_FIELD_NUMBER = 5;
     private com.google.protobuf.LazyStringList headers_;
     /**
      * <code>repeated string headers = 5;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getHeadersList() {
       return headers_;
     }
@@ -335,7 +331,6 @@ public final class WebSocketProtos {
       return headers_.getByteString(index);
     }
 
-    // optional uint64 id = 4;
     public static final int ID_FIELD_NUMBER = 4;
     private long id_;
     /**
@@ -361,7 +356,8 @@ public final class WebSocketProtos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -501,8 +497,9 @@ public final class WebSocketProtos {
      * Protobuf type {@code signalservice.WebSocketRequestMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessageOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:signalservice.WebSocketRequestMessage)
+        org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.whispersystems.signalservice.internal.websocket.WebSocketProtos.internal_static_signalservice_WebSocketRequestMessage_descriptor;
@@ -586,8 +583,7 @@ public final class WebSocketProtos {
         }
         result.body_ = body_;
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          headers_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              headers_);
+          headers_ = headers_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000008);
         }
         result.headers_ = headers_;
@@ -664,7 +660,6 @@ public final class WebSocketProtos {
       }
       private int bitField0_;
 
-      // optional string verb = 1;
       private java.lang.Object verb_ = "";
       /**
        * <code>optional string verb = 1;</code>
@@ -678,9 +673,12 @@ public final class WebSocketProtos {
       public java.lang.String getVerb() {
         java.lang.Object ref = verb_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          verb_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            verb_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -738,7 +736,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional string path = 2;
       private java.lang.Object path_ = "";
       /**
        * <code>optional string path = 2;</code>
@@ -752,9 +749,12 @@ public final class WebSocketProtos {
       public java.lang.String getPath() {
         java.lang.Object ref = path_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          path_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            path_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -812,7 +812,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional bytes body = 3;
       private com.google.protobuf.ByteString body_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes body = 3;</code>
@@ -848,7 +847,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // repeated string headers = 5;
       private com.google.protobuf.LazyStringList headers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureHeadersIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
@@ -859,9 +857,9 @@ public final class WebSocketProtos {
       /**
        * <code>repeated string headers = 5;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getHeadersList() {
-        return java.util.Collections.unmodifiableList(headers_);
+        return headers_.getUnmodifiableView();
       }
       /**
        * <code>repeated string headers = 5;</code>
@@ -914,7 +912,8 @@ public final class WebSocketProtos {
       public Builder addAllHeaders(
           java.lang.Iterable<java.lang.String> values) {
         ensureHeadersIsMutable();
-        super.addAll(values, headers_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, headers_);
         onChanged();
         return this;
       }
@@ -941,7 +940,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional uint64 id = 4;
       private long id_ ;
       /**
        * <code>optional uint64 id = 4;</code>
@@ -985,10 +983,10 @@ public final class WebSocketProtos {
     // @@protoc_insertion_point(class_scope:signalservice.WebSocketRequestMessage)
   }
 
-  public interface WebSocketResponseMessageOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface WebSocketResponseMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:signalservice.WebSocketResponseMessage)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional uint64 id = 1;
     /**
      * <code>optional uint64 id = 1;</code>
      */
@@ -998,7 +996,6 @@ public final class WebSocketProtos {
      */
     long getId();
 
-    // optional uint32 status = 2;
     /**
      * <code>optional uint32 status = 2;</code>
      */
@@ -1008,7 +1005,6 @@ public final class WebSocketProtos {
      */
     int getStatus();
 
-    // optional string message = 3;
     /**
      * <code>optional string message = 3;</code>
      */
@@ -1023,12 +1019,11 @@ public final class WebSocketProtos {
     com.google.protobuf.ByteString
         getMessageBytes();
 
-    // repeated string headers = 5;
     /**
      * <code>repeated string headers = 5;</code>
      */
-    java.util.List<java.lang.String>
-    getHeadersList();
+    com.google.protobuf.ProtocolStringList
+        getHeadersList();
     /**
      * <code>repeated string headers = 5;</code>
      */
@@ -1043,7 +1038,6 @@ public final class WebSocketProtos {
     com.google.protobuf.ByteString
         getHeadersBytes(int index);
 
-    // optional bytes body = 4;
     /**
      * <code>optional bytes body = 4;</code>
      */
@@ -1057,8 +1051,9 @@ public final class WebSocketProtos {
    * Protobuf type {@code signalservice.WebSocketResponseMessage}
    */
   public static final class WebSocketResponseMessage extends
-      com.google.protobuf.GeneratedMessage
-      implements WebSocketResponseMessageOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:signalservice.WebSocketResponseMessage)
+      WebSocketResponseMessageOrBuilder {
     // Use WebSocketResponseMessage.newBuilder() to construct.
     private WebSocketResponseMessage(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1115,8 +1110,9 @@ public final class WebSocketProtos {
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              message_ = input.readBytes();
+              message_ = bs;
               break;
             }
             case 34: {
@@ -1125,11 +1121,12 @@ public final class WebSocketProtos {
               break;
             }
             case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 headers_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000008;
               }
-              headers_.add(input.readBytes());
+              headers_.add(bs);
               break;
             }
           }
@@ -1141,7 +1138,7 @@ public final class WebSocketProtos {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-          headers_ = new com.google.protobuf.UnmodifiableLazyStringList(headers_);
+          headers_ = headers_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1175,7 +1172,6 @@ public final class WebSocketProtos {
     }
 
     private int bitField0_;
-    // optional uint64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_;
     /**
@@ -1191,7 +1187,6 @@ public final class WebSocketProtos {
       return id_;
     }
 
-    // optional uint32 status = 2;
     public static final int STATUS_FIELD_NUMBER = 2;
     private int status_;
     /**
@@ -1207,7 +1202,6 @@ public final class WebSocketProtos {
       return status_;
     }
 
-    // optional string message = 3;
     public static final int MESSAGE_FIELD_NUMBER = 3;
     private java.lang.Object message_;
     /**
@@ -1250,13 +1244,12 @@ public final class WebSocketProtos {
       }
     }
 
-    // repeated string headers = 5;
     public static final int HEADERS_FIELD_NUMBER = 5;
     private com.google.protobuf.LazyStringList headers_;
     /**
      * <code>repeated string headers = 5;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getHeadersList() {
       return headers_;
     }
@@ -1280,7 +1273,6 @@ public final class WebSocketProtos {
       return headers_.getByteString(index);
     }
 
-    // optional bytes body = 4;
     public static final int BODY_FIELD_NUMBER = 4;
     private com.google.protobuf.ByteString body_;
     /**
@@ -1306,7 +1298,8 @@ public final class WebSocketProtos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1446,8 +1439,9 @@ public final class WebSocketProtos {
      * Protobuf type {@code signalservice.WebSocketResponseMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessageOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:signalservice.WebSocketResponseMessage)
+        org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.whispersystems.signalservice.internal.websocket.WebSocketProtos.internal_static_signalservice_WebSocketResponseMessage_descriptor;
@@ -1531,8 +1525,7 @@ public final class WebSocketProtos {
         }
         result.message_ = message_;
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          headers_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              headers_);
+          headers_ = headers_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000008);
         }
         result.headers_ = headers_;
@@ -1607,7 +1600,6 @@ public final class WebSocketProtos {
       }
       private int bitField0_;
 
-      // optional uint64 id = 1;
       private long id_ ;
       /**
        * <code>optional uint64 id = 1;</code>
@@ -1640,7 +1632,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional uint32 status = 2;
       private int status_ ;
       /**
        * <code>optional uint32 status = 2;</code>
@@ -1673,7 +1664,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional string message = 3;
       private java.lang.Object message_ = "";
       /**
        * <code>optional string message = 3;</code>
@@ -1687,9 +1677,12 @@ public final class WebSocketProtos {
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          message_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            message_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1747,7 +1740,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // repeated string headers = 5;
       private com.google.protobuf.LazyStringList headers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureHeadersIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
@@ -1758,9 +1750,9 @@ public final class WebSocketProtos {
       /**
        * <code>repeated string headers = 5;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getHeadersList() {
-        return java.util.Collections.unmodifiableList(headers_);
+        return headers_.getUnmodifiableView();
       }
       /**
        * <code>repeated string headers = 5;</code>
@@ -1813,7 +1805,8 @@ public final class WebSocketProtos {
       public Builder addAllHeaders(
           java.lang.Iterable<java.lang.String> values) {
         ensureHeadersIsMutable();
-        super.addAll(values, headers_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, headers_);
         onChanged();
         return this;
       }
@@ -1840,7 +1833,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional bytes body = 4;
       private com.google.protobuf.ByteString body_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes body = 4;</code>
@@ -1887,10 +1879,10 @@ public final class WebSocketProtos {
     // @@protoc_insertion_point(class_scope:signalservice.WebSocketResponseMessage)
   }
 
-  public interface WebSocketMessageOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface WebSocketMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:signalservice.WebSocketMessage)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional .signalservice.WebSocketMessage.Type type = 1;
     /**
      * <code>optional .signalservice.WebSocketMessage.Type type = 1;</code>
      */
@@ -1900,7 +1892,6 @@ public final class WebSocketProtos {
      */
     org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketMessage.Type getType();
 
-    // optional .signalservice.WebSocketRequestMessage request = 2;
     /**
      * <code>optional .signalservice.WebSocketRequestMessage request = 2;</code>
      */
@@ -1914,7 +1905,6 @@ public final class WebSocketProtos {
      */
     org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessageOrBuilder getRequestOrBuilder();
 
-    // optional .signalservice.WebSocketResponseMessage response = 3;
     /**
      * <code>optional .signalservice.WebSocketResponseMessage response = 3;</code>
      */
@@ -1932,8 +1922,9 @@ public final class WebSocketProtos {
    * Protobuf type {@code signalservice.WebSocketMessage}
    */
   public static final class WebSocketMessage extends
-      com.google.protobuf.GeneratedMessage
-      implements WebSocketMessageOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:signalservice.WebSocketMessage)
+      WebSocketMessageOrBuilder {
     // Use WebSocketMessage.newBuilder() to construct.
     private WebSocketMessage(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2147,7 +2138,6 @@ public final class WebSocketProtos {
     }
 
     private int bitField0_;
-    // optional .signalservice.WebSocketMessage.Type type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketMessage.Type type_;
     /**
@@ -2163,7 +2153,6 @@ public final class WebSocketProtos {
       return type_;
     }
 
-    // optional .signalservice.WebSocketRequestMessage request = 2;
     public static final int REQUEST_FIELD_NUMBER = 2;
     private org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage request_;
     /**
@@ -2185,7 +2174,6 @@ public final class WebSocketProtos {
       return request_;
     }
 
-    // optional .signalservice.WebSocketResponseMessage response = 3;
     public static final int RESPONSE_FIELD_NUMBER = 3;
     private org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage response_;
     /**
@@ -2215,7 +2203,8 @@ public final class WebSocketProtos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -2336,8 +2325,9 @@ public final class WebSocketProtos {
      * Protobuf type {@code signalservice.WebSocketMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketMessageOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:signalservice.WebSocketMessage)
+        org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.whispersystems.signalservice.internal.websocket.WebSocketProtos.internal_static_signalservice_WebSocketMessage_descriptor;
@@ -2486,7 +2476,6 @@ public final class WebSocketProtos {
       }
       private int bitField0_;
 
-      // optional .signalservice.WebSocketMessage.Type type = 1;
       private org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketMessage.Type type_ = org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketMessage.Type.UNKNOWN;
       /**
        * <code>optional .signalservice.WebSocketMessage.Type type = 1;</code>
@@ -2522,7 +2511,6 @@ public final class WebSocketProtos {
         return this;
       }
 
-      // optional .signalservice.WebSocketRequestMessage request = 2;
       private org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage request_ = org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage.Builder, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessageOrBuilder> requestBuilder_;
@@ -2631,7 +2619,7 @@ public final class WebSocketProtos {
         if (requestBuilder_ == null) {
           requestBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessage.Builder, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketRequestMessageOrBuilder>(
-                  request_,
+                  getRequest(),
                   getParentForChildren(),
                   isClean());
           request_ = null;
@@ -2639,7 +2627,6 @@ public final class WebSocketProtos {
         return requestBuilder_;
       }
 
-      // optional .signalservice.WebSocketResponseMessage response = 3;
       private org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage response_ = org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage.Builder, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessageOrBuilder> responseBuilder_;
@@ -2748,7 +2735,7 @@ public final class WebSocketProtos {
         if (responseBuilder_ == null) {
           responseBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessage.Builder, org.whispersystems.signalservice.internal.websocket.WebSocketProtos.WebSocketResponseMessageOrBuilder>(
-                  response_,
+                  getResponse(),
                   getParentForChildren(),
                   isClean());
           response_ = null;
@@ -2767,17 +2754,17 @@ public final class WebSocketProtos {
     // @@protoc_insertion_point(class_scope:signalservice.WebSocketMessage)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_signalservice_WebSocketRequestMessage_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_signalservice_WebSocketRequestMessage_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_signalservice_WebSocketResponseMessage_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_signalservice_WebSocketResponseMessage_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_signalservice_WebSocketMessage_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -2807,35 +2794,35 @@ public final class WebSocketProtos {
       "ernal.websocketB\017WebSocketProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_signalservice_WebSocketRequestMessage_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_signalservice_WebSocketRequestMessage_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_signalservice_WebSocketRequestMessage_descriptor,
-              new java.lang.String[] { "Verb", "Path", "Body", "Headers", "Id", });
-          internal_static_signalservice_WebSocketResponseMessage_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_signalservice_WebSocketResponseMessage_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_signalservice_WebSocketResponseMessage_descriptor,
-              new java.lang.String[] { "Id", "Status", "Message", "Headers", "Body", });
-          internal_static_signalservice_WebSocketMessage_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_signalservice_WebSocketMessage_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_signalservice_WebSocketMessage_descriptor,
-              new java.lang.String[] { "Type", "Request", "Response", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_signalservice_WebSocketRequestMessage_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_signalservice_WebSocketRequestMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_signalservice_WebSocketRequestMessage_descriptor,
+        new java.lang.String[] { "Verb", "Path", "Body", "Headers", "Id", });
+    internal_static_signalservice_WebSocketResponseMessage_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_signalservice_WebSocketResponseMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_signalservice_WebSocketResponseMessage_descriptor,
+        new java.lang.String[] { "Id", "Status", "Message", "Headers", "Body", });
+    internal_static_signalservice_WebSocketMessage_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_signalservice_WebSocketMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_signalservice_WebSocketMessage_descriptor,
+        new java.lang.String[] { "Type", "Request", "Response", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
