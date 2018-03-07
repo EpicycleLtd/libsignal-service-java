@@ -209,6 +209,7 @@ public class SignalServiceDataMessage {
     private boolean            expirationUpdate;
     private byte[]             profileKey;
     private boolean            profileKeyUpdate;
+    private Optional<PredefinedAnswers>  predefinedAnswers;
 
     private Builder() {}
 
@@ -270,11 +271,16 @@ public class SignalServiceDataMessage {
       return this;
     }
 
+    public Builder withPredefinedAnswers(Optional<PredefinedAnswers> predefinedAnswers) {
+      this.predefinedAnswers = predefinedAnswers;
+      return this;
+    }
+
     public SignalServiceDataMessage build() {
       if (timestamp == 0) timestamp = System.currentTimeMillis();
       return new SignalServiceDataMessage(timestamp, group, attachments, body, endSession,
                                           expiresInSeconds, expirationUpdate, profileKey,
-                                          profileKeyUpdate, null);
+                                          profileKeyUpdate, predefinedAnswers);
     }
   }
 }
