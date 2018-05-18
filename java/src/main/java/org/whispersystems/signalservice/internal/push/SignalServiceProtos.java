@@ -18095,6 +18095,26 @@ public final class SignalServiceProtos {
      * <code>optional .signalservice.AttachmentPointer avatar = 5;</code>
      */
     org.whispersystems.signalservice.internal.push.SignalServiceProtos.AttachmentPointerOrBuilder getAvatarOrBuilder();
+
+    // repeated string kicked = 50;
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    java.util.List<java.lang.String>
+    getKickedList();
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    int getKickedCount();
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    java.lang.String getKicked(int index);
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getKickedBytes(int index);
   }
   /**
    * Protobuf type {@code signalservice.GroupContext}
@@ -18189,6 +18209,14 @@ public final class SignalServiceProtos {
               bitField0_ |= 0x00000008;
               break;
             }
+            case 402: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+                kicked_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              kicked_.add(input.readBytes());
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -18199,6 +18227,9 @@ public final class SignalServiceProtos {
       } finally {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           members_ = new com.google.protobuf.UnmodifiableLazyStringList(members_);
+        }
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+          kicked_ = new com.google.protobuf.UnmodifiableLazyStringList(kicked_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -18256,6 +18287,10 @@ public final class SignalServiceProtos {
        * <code>REQUEST_INFO = 4;</code>
        */
       REQUEST_INFO(4, 4),
+      /**
+       * <code>KICK_OUT = 50;</code>
+       */
+      KICK_OUT(5, 50),
       ;
 
       /**
@@ -18278,6 +18313,10 @@ public final class SignalServiceProtos {
        * <code>REQUEST_INFO = 4;</code>
        */
       public static final int REQUEST_INFO_VALUE = 4;
+      /**
+       * <code>KICK_OUT = 50;</code>
+       */
+      public static final int KICK_OUT_VALUE = 50;
 
 
       public final int getNumber() { return value; }
@@ -18289,6 +18328,7 @@ public final class SignalServiceProtos {
           case 2: return DELIVER;
           case 3: return QUIT;
           case 4: return REQUEST_INFO;
+          case 50: return KICK_OUT;
           default: return null;
         }
       }
@@ -18468,12 +18508,43 @@ public final class SignalServiceProtos {
       return avatar_;
     }
 
+    // repeated string kicked = 50;
+    public static final int KICKED_FIELD_NUMBER = 50;
+    private com.google.protobuf.LazyStringList kicked_;
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    public java.util.List<java.lang.String>
+        getKickedList() {
+      return kicked_;
+    }
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    public int getKickedCount() {
+      return kicked_.size();
+    }
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    public java.lang.String getKicked(int index) {
+      return kicked_.get(index);
+    }
+    /**
+     * <code>repeated string kicked = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getKickedBytes(int index) {
+      return kicked_.getByteString(index);
+    }
+
     private void initFields() {
       id_ = com.google.protobuf.ByteString.EMPTY;
       type_ = org.whispersystems.signalservice.internal.push.SignalServiceProtos.GroupContext.Type.UNKNOWN;
       name_ = "";
       members_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       avatar_ = org.whispersystems.signalservice.internal.push.SignalServiceProtos.AttachmentPointer.getDefaultInstance();
+      kicked_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -18501,6 +18572,9 @@ public final class SignalServiceProtos {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeMessage(5, avatar_);
+      }
+      for (int i = 0; i < kicked_.size(); i++) {
+        output.writeBytes(50, kicked_.getByteString(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -18535,6 +18609,15 @@ public final class SignalServiceProtos {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, avatar_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < kicked_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(kicked_.getByteString(i));
+        }
+        size += dataSize;
+        size += 2 * getKickedList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -18667,6 +18750,8 @@ public final class SignalServiceProtos {
           avatarBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000010);
+        kicked_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -18721,6 +18806,12 @@ public final class SignalServiceProtos {
         } else {
           result.avatar_ = avatarBuilder_.build();
         }
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          kicked_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              kicked_);
+          bitField0_ = (bitField0_ & ~0x00000020);
+        }
+        result.kicked_ = kicked_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -18760,6 +18851,16 @@ public final class SignalServiceProtos {
         }
         if (other.hasAvatar()) {
           mergeAvatar(other.getAvatar());
+        }
+        if (!other.kicked_.isEmpty()) {
+          if (kicked_.isEmpty()) {
+            kicked_ = other.kicked_;
+            bitField0_ = (bitField0_ & ~0x00000020);
+          } else {
+            ensureKickedIsMutable();
+            kicked_.addAll(other.kicked_);
+          }
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -19142,6 +19243,99 @@ public final class SignalServiceProtos {
           avatar_ = null;
         }
         return avatarBuilder_;
+      }
+
+      // repeated string kicked = 50;
+      private com.google.protobuf.LazyStringList kicked_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureKickedIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          kicked_ = new com.google.protobuf.LazyStringArrayList(kicked_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public java.util.List<java.lang.String>
+          getKickedList() {
+        return java.util.Collections.unmodifiableList(kicked_);
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public int getKickedCount() {
+        return kicked_.size();
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public java.lang.String getKicked(int index) {
+        return kicked_.get(index);
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getKickedBytes(int index) {
+        return kicked_.getByteString(index);
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public Builder setKicked(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureKickedIsMutable();
+        kicked_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public Builder addKicked(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureKickedIsMutable();
+        kicked_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public Builder addAllKicked(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureKickedIsMutable();
+        super.addAll(values, kicked_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public Builder clearKicked() {
+        kicked_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string kicked = 50;</code>
+       */
+      public Builder addKickedBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureKickedIsMutable();
+        kicked_.add(value);
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:signalservice.GroupContext)
@@ -22982,27 +23176,27 @@ public final class SignalServiceProtos {
       "\t\022\013\n\003key\030\003 \001(\014\022\014\n\004size\030\004 \001(\r\022\021\n\tthumbnai",
       "l\030\005 \001(\014\022\016\n\006digest\030\006 \001(\014\022\020\n\010fileName\030\007 \001(" +
       "\t\022\r\n\005flags\030\010 \001(\r\022\r\n\005width\030\t \001(\r\022\016\n\006heigh" +
-      "t\030\n \001(\r\"\032\n\005Flags\022\021\n\rVOICE_MESSAGE\020\001\"\345\001\n\014" +
+      "t\030\n \001(\r\"\032\n\005Flags\022\021\n\rVOICE_MESSAGE\020\001\"\203\002\n\014" +
       "GroupContext\022\n\n\002id\030\001 \001(\014\022.\n\004type\030\002 \001(\0162 " +
       ".signalservice.GroupContext.Type\022\014\n\004name" +
       "\030\003 \001(\t\022\017\n\007members\030\004 \003(\t\0220\n\006avatar\030\005 \001(\0132" +
-      " .signalservice.AttachmentPointer\"H\n\004Typ" +
-      "e\022\013\n\007UNKNOWN\020\000\022\n\n\006UPDATE\020\001\022\013\n\007DELIVER\020\002\022" +
-      "\010\n\004QUIT\020\003\022\020\n\014REQUEST_INFO\020\004\"\207\002\n\016ContactD" +
-      "etails\022\016\n\006number\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\0224\n\006",
-      "avatar\030\003 \001(\0132$.signalservice.ContactDeta" +
-      "ils.Avatar\022\r\n\005color\030\004 \001(\t\022)\n\010verified\030\005 " +
-      "\001(\0132\027.signalservice.Verified\022\022\n\nprofileK" +
-      "ey\030\006 \001(\014\022\017\n\007blocked\030\007 \001(\010\022\023\n\013expireTimer" +
-      "\030\010 \001(\r\032-\n\006Avatar\022\023\n\013contentType\030\001 \001(\t\022\016\n" +
-      "\006length\030\002 \001(\r\"\307\001\n\014GroupDetails\022\n\n\002id\030\001 \001" +
-      "(\014\022\014\n\004name\030\002 \001(\t\022\017\n\007members\030\003 \003(\t\0222\n\006ava" +
-      "tar\030\004 \001(\0132\".signalservice.GroupDetails.A" +
-      "vatar\022\024\n\006active\030\005 \001(\010:\004true\022\023\n\013expireTim" +
-      "er\030\006 \001(\r\032-\n\006Avatar\022\023\n\013contentType\030\001 \001(\t\022",
-      "\016\n\006length\030\002 \001(\rBE\n.org.whispersystems.si" +
-      "gnalservice.internal.pushB\023SignalService" +
-      "Protos"
+      " .signalservice.AttachmentPointer\022\016\n\006kic" +
+      "ked\0302 \003(\t\"V\n\004Type\022\013\n\007UNKNOWN\020\000\022\n\n\006UPDATE" +
+      "\020\001\022\013\n\007DELIVER\020\002\022\010\n\004QUIT\020\003\022\020\n\014REQUEST_INF" +
+      "O\020\004\022\014\n\010KICK_OUT\0202\"\207\002\n\016ContactDetails\022\016\n\006",
+      "number\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\0224\n\006avatar\030\003 \001" +
+      "(\0132$.signalservice.ContactDetails.Avatar" +
+      "\022\r\n\005color\030\004 \001(\t\022)\n\010verified\030\005 \001(\0132\027.sign" +
+      "alservice.Verified\022\022\n\nprofileKey\030\006 \001(\014\022\017" +
+      "\n\007blocked\030\007 \001(\010\022\023\n\013expireTimer\030\010 \001(\r\032-\n\006" +
+      "Avatar\022\023\n\013contentType\030\001 \001(\t\022\016\n\006length\030\002 " +
+      "\001(\r\"\307\001\n\014GroupDetails\022\n\n\002id\030\001 \001(\014\022\014\n\004name" +
+      "\030\002 \001(\t\022\017\n\007members\030\003 \003(\t\0222\n\006avatar\030\004 \001(\0132" +
+      "\".signalservice.GroupDetails.Avatar\022\024\n\006a" +
+      "ctive\030\005 \001(\010:\004true\022\023\n\013expireTimer\030\006 \001(\r\032-",
+      "\n\006Avatar\022\023\n\013contentType\030\001 \001(\t\022\016\n\006length\030" +
+      "\002 \001(\rBE\n.org.whispersystems.signalservic" +
+      "e.internal.pushB\023SignalServiceProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -23146,7 +23340,7 @@ public final class SignalServiceProtos {
           internal_static_signalservice_GroupContext_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_signalservice_GroupContext_descriptor,
-              new java.lang.String[] { "Id", "Type", "Name", "Members", "Avatar", });
+              new java.lang.String[] { "Id", "Type", "Name", "Members", "Avatar", "Kicked", });
           internal_static_signalservice_ContactDetails_descriptor =
             getDescriptor().getMessageTypes().get(11);
           internal_static_signalservice_ContactDetails_fieldAccessorTable = new

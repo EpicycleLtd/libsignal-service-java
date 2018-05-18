@@ -30,7 +30,8 @@ public class SignalServiceGroup {
     UPDATE,
     DELIVER,
     QUIT,
-    REQUEST_INFO
+    REQUEST_INFO,
+    KICK_OUT
   }
 
   private final byte[]                         groupId;
@@ -38,6 +39,7 @@ public class SignalServiceGroup {
   private final Optional<String>               name;
   private final Optional<List<String>>         members;
   private final Optional<SignalServiceAttachment> avatar;
+  private final Optional<List<String>>         kicked;
 
 
   /**
@@ -45,7 +47,7 @@ public class SignalServiceGroup {
    * @param groupId
    */
   public SignalServiceGroup(byte[] groupId) {
-    this(Type.DELIVER, groupId, null, null, null);
+    this(Type.DELIVER, groupId, null, null, null, null);
   }
 
   /**
@@ -58,13 +60,15 @@ public class SignalServiceGroup {
    */
   public SignalServiceGroup(Type type, byte[] groupId, String name,
                             List<String> members,
-                            SignalServiceAttachment avatar)
+                            SignalServiceAttachment avatar,
+                            List<String> kicked)
   {
     this.type    = type;
     this.groupId = groupId;
     this.name    = Optional.fromNullable(name);
     this.members = Optional.fromNullable(members);
     this.avatar  = Optional.fromNullable(avatar);
+    this.kicked  = Optional.fromNullable(kicked);
   }
 
   public byte[] getGroupId() {
@@ -87,6 +91,10 @@ public class SignalServiceGroup {
     return avatar;
   }
 
+  public Optional<List<String>> getKicked() {
+    return kicked;
+  }
+
   public static Builder newUpdateBuilder() {
     return new Builder(Type.UPDATE);
   }
@@ -102,6 +110,7 @@ public class SignalServiceGroup {
     private String               name;
     private List<String>         members;
     private SignalServiceAttachment avatar;
+    private List<String>         kicked;
 
     private Builder(Type type) {
       this.type = type;
@@ -127,14 +136,19 @@ public class SignalServiceGroup {
       return this;
     }
 
+    public Builder withKicked(List<String> kicked) {
+      this.kicked = kicked;
+      return this;
+    }
+
     public SignalServiceGroup build() {
       if (id == null) throw new IllegalArgumentException("No group ID specified!");
 
-      if (type == Type.UPDATE && name == null && members == null && avatar == null) {
+      if (type == Type.UPDATE && name == null && members == null && avatar == null && kicked == null) {
         throw new IllegalArgumentException("Group update with no updates!");
       }
 
-      return new SignalServiceGroup(type, id, name, members, avatar);
+      return new SignalServiceGroup(type, id, name, members, avatar, kicked);
     }
 
   }

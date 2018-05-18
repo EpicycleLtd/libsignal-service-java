@@ -4,3 +4,5 @@
 local.properties
 build/
 gradle.properties
+.DS_Store
+**/.DS_Store
