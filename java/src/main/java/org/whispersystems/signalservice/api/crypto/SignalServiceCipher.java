@@ -293,6 +293,7 @@ public class SignalServiceCipher {
       case UPDATE:       type = SignalServiceGroup.Type.UPDATE;       break;
       case QUIT:         type = SignalServiceGroup.Type.QUIT;         break;
       case REQUEST_INFO: type = SignalServiceGroup.Type.REQUEST_INFO; break;
+      case KICK_OUT:     type = SignalServiceGroup.Type.KICK_OUT;     break;
       default:           type = SignalServiceGroup.Type.UNKNOWN;      break;
     }
 
@@ -300,6 +301,7 @@ public class SignalServiceCipher {
       String                      name    = null;
       List<String>                members = null;
       SignalServiceAttachmentPointer avatar  = null;
+      List<String>                kicked = null;
 
       if (content.getGroup().hasName()) {
         name = content.getGroup().getName();
@@ -323,7 +325,11 @@ public class SignalServiceCipher {
                                                     false);
       }
 
-      return new SignalServiceGroup(type, content.getGroup().getId().toByteArray(), name, members, avatar);
+      if (content.getGroup().getKickedCount() > 0) {
+        kicked = content.getGroup().getKickedList();
+      }
+
+      return new SignalServiceGroup(type, content.getGroup().getId().toByteArray(), name, members, avatar, kicked);
     }
 
     return new SignalServiceGroup(content.getGroup().getId().toByteArray());

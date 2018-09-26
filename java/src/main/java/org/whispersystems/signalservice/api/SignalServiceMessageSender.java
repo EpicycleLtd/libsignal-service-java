@@ -477,11 +477,13 @@ public class SignalServiceMessageSender {
     if (group.getType() != SignalServiceGroup.Type.DELIVER) {
       if      (group.getType() == SignalServiceGroup.Type.UPDATE)       builder.setType(GroupContext.Type.UPDATE);
       else if (group.getType() == SignalServiceGroup.Type.QUIT)         builder.setType(GroupContext.Type.QUIT);
+      else if (group.getType() == SignalServiceGroup.Type.KICK_OUT)     builder.setType(GroupContext.Type.KICK_OUT);
       else if (group.getType() == SignalServiceGroup.Type.REQUEST_INFO) builder.setType(GroupContext.Type.REQUEST_INFO);
       else                                                              throw new AssertionError("Unknown type: " + group.getType());
 
       if (group.getName().isPresent()) builder.setName(group.getName().get());
       if (group.getMembers().isPresent()) builder.addAllMembers(group.getMembers().get());
+      if (group.getKicked().isPresent()) builder.addAllKicked(group.getKicked().get());
 
       if (group.getAvatar().isPresent() && group.getAvatar().get().isStream()) {
         AttachmentPointer pointer = createAttachmentPointer(group.getAvatar().get().asStream());
