@@ -7,6 +7,7 @@
 package org.whispersystems.signalservice.api.messages;
 
 import org.whispersystems.libsignal.util.guava.Optional;
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos.PredefinedAnswers;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class SignalServiceDataMessage {
   private final boolean                                 expirationUpdate;
   private final int                                     expiresInSeconds;
   private final boolean                                 profileKeyUpdate;
+  private final Optional<PredefinedAnswers>             predefinedAnswers;
+
 
   /**
    * Construct a SignalServiceDataMessage with a body and no attachments.
@@ -98,7 +101,7 @@ public class SignalServiceDataMessage {
    * @param expiresInSeconds The number of seconds in which a message should disappear after having been seen.
    */
   public SignalServiceDataMessage(long timestamp, SignalServiceGroup group, List<SignalServiceAttachment> attachments, String body, int expiresInSeconds) {
-    this(timestamp, group, attachments, body, false, expiresInSeconds, false, null, false);
+    this(timestamp, group, attachments, body, false, expiresInSeconds, false, null, false, null);
   }
 
   /**
@@ -110,11 +113,13 @@ public class SignalServiceDataMessage {
    * @param body The message contents.
    * @param endSession Flag indicating whether this message should close a session.
    * @param expiresInSeconds Number of seconds in which the message should disappear after being seen.
+   * @param predefinedAnswers {@link PredefinedAnswers}
    */
   public SignalServiceDataMessage(long timestamp, SignalServiceGroup group,
                                   List<SignalServiceAttachment> attachments,
                                   String body, boolean endSession, int expiresInSeconds,
-                                  boolean expirationUpdate, byte[] profileKey, boolean profileKeyUpdate)
+                                  boolean expirationUpdate, byte[] profileKey,
+                                  boolean profileKeyUpdate, Optional<PredefinedAnswers> predefinedAnswers)
   {
     this.timestamp        = timestamp;
     this.body             = Optional.fromNullable(body);
@@ -130,6 +135,7 @@ public class SignalServiceDataMessage {
     } else {
       this.attachments = Optional.absent();
     }
+    this.predefinedAnswers = predefinedAnswers;
   }
 
   public static Builder newBuilder() {
@@ -188,6 +194,10 @@ public class SignalServiceDataMessage {
     return profileKey;
   }
 
+  public Optional<PredefinedAnswers> getPredefinedAnswers() {
+    return predefinedAnswers;
+  }
+
   public static class Builder {
 
     private List<SignalServiceAttachment> attachments = new LinkedList<>();
@@ -199,6 +209,7 @@ public class SignalServiceDataMessage {
     private boolean            expirationUpdate;
     private byte[]             profileKey;
     private boolean            profileKeyUpdate;
+    private Optional<PredefinedAnswers>  predefinedAnswers;
 
     private Builder() {}
 
@@ -260,11 +271,16 @@ public class SignalServiceDataMessage {
       return this;
     }
 
+    public Builder withPredefinedAnswers(Optional<PredefinedAnswers> predefinedAnswers) {
+      this.predefinedAnswers = predefinedAnswers;
+      return this;
+    }
+
     public SignalServiceDataMessage build() {
       if (timestamp == 0) timestamp = System.currentTimeMillis();
       return new SignalServiceDataMessage(timestamp, group, attachments, body, endSession,
                                           expiresInSeconds, expirationUpdate, profileKey,
-                                          profileKeyUpdate);
+                                          profileKeyUpdate, predefinedAnswers);
     }
   }
 }

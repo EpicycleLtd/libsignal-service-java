@@ -19,7 +19,7 @@ dependencies {
 
     compile "org.whispersystems:signal-protocol-java:${signal_version}"
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'org.apache.httpcomponents:httpclient:4.4'
+//    compile 'org.apache.httpcomponents:httpclient:4.4'
     compile 'com.madgag.spongycastle:prov:1.51.0.0'
 
     testCompile 'junit:junit:3.8.2'
