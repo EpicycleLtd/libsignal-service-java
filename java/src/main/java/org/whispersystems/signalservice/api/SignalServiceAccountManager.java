@@ -98,6 +98,10 @@ public class SignalServiceAccountManager {
     }
   }
 
+  public String getDirectoryVerificationToken() throws IOException {
+    return this.pushServiceSocket.getDirectoryVerificationToken();
+  }
+
   /**
    * Request an SMS verification code.  On success, the server will send
    * an SMS verification code to this Signal user.

@@ -91,6 +91,7 @@ public class PushServiceSocket {
   private static final String REQUEST_TOKEN_PATH        = "/v1/accounts/token";
   private static final String TURN_SERVER_INFO          = "/v1/accounts/turn";
   private static final String SET_ACCOUNT_ATTRIBUTES    = "/v1/accounts/attributes/";
+  private static final String AUTH_USER_PATH            = "/v1/accounts/token/ldap/";
 
   private static final String PREKEY_METADATA_PATH      = "/v2/keys/";
   private static final String PREKEY_PATH               = "/v2/keys/%s";
@@ -124,6 +125,11 @@ public class PushServiceSocket {
     this.serviceClients      = createConnectionHolders(signalServiceConfiguration.getSignalServiceUrls());
     this.cdnClients          = createConnectionHolders(signalServiceConfiguration.getSignalCdnUrls());
     this.random              = new SecureRandom();
+  }
+
+  public String getDirectoryVerificationToken() throws IOException {
+    String responseText = makeServiceRequest(AUTH_USER_PATH, "GET", null);
+    return JsonUtil.fromJson(responseText, AuthorizationToken.class).getToken();
   }
 
   public void createAccount(boolean voice) throws IOException {
