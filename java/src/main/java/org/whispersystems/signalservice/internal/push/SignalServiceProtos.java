@@ -106,6 +106,16 @@ public final class SignalServiceProtos {
      * </pre>
      */
     com.google.protobuf.ByteString getContent();
+
+    // optional uint64 deliveryTimestamp = 9;
+    /**
+     * <code>optional uint64 deliveryTimestamp = 9;</code>
+     */
+    boolean hasDeliveryTimestamp();
+    /**
+     * <code>optional uint64 deliveryTimestamp = 9;</code>
+     */
+    long getDeliveryTimestamp();
   }
   /**
    * Protobuf type {@code signalservice.Envelope}
@@ -199,6 +209,11 @@ public final class SignalServiceProtos {
               content_ = input.readBytes();
               break;
             }
+            case 72: {
+              bitField0_ |= 0x00000080;
+              deliveryTimestamp_ = input.readUInt64();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -263,6 +278,10 @@ public final class SignalServiceProtos {
        * <code>RECEIPT = 5;</code>
        */
       RECEIPT(4, 5),
+      /**
+       * <code>READ = 6;</code>
+       */
+      READ(5, 6),
       ;
 
       /**
@@ -285,6 +304,10 @@ public final class SignalServiceProtos {
        * <code>RECEIPT = 5;</code>
        */
       public static final int RECEIPT_VALUE = 5;
+      /**
+       * <code>READ = 6;</code>
+       */
+      public static final int READ_VALUE = 6;
 
 
       public final int getNumber() { return value; }
@@ -296,6 +319,7 @@ public final class SignalServiceProtos {
           case 2: return KEY_EXCHANGE;
           case 3: return PREKEY_BUNDLE;
           case 5: return RECEIPT;
+          case 6: return READ;
           default: return null;
         }
       }
@@ -530,6 +554,22 @@ public final class SignalServiceProtos {
       return content_;
     }
 
+    // optional uint64 deliveryTimestamp = 9;
+    public static final int DELIVERYTIMESTAMP_FIELD_NUMBER = 9;
+    private long deliveryTimestamp_;
+    /**
+     * <code>optional uint64 deliveryTimestamp = 9;</code>
+     */
+    public boolean hasDeliveryTimestamp() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>optional uint64 deliveryTimestamp = 9;</code>
+     */
+    public long getDeliveryTimestamp() {
+      return deliveryTimestamp_;
+    }
+
     private void initFields() {
       type_ = org.whispersystems.signalservice.internal.push.SignalServiceProtos.Envelope.Type.UNKNOWN;
       source_ = "";
@@ -538,6 +578,7 @@ public final class SignalServiceProtos {
       timestamp_ = 0L;
       legacyMessage_ = com.google.protobuf.ByteString.EMPTY;
       content_ = com.google.protobuf.ByteString.EMPTY;
+      deliveryTimestamp_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -571,6 +612,9 @@ public final class SignalServiceProtos {
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         output.writeBytes(8, content_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeUInt64(9, deliveryTimestamp_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -608,6 +652,10 @@ public final class SignalServiceProtos {
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(8, content_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(9, deliveryTimestamp_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -739,6 +787,8 @@ public final class SignalServiceProtos {
         bitField0_ = (bitField0_ & ~0x00000020);
         content_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000040);
+        deliveryTimestamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000080);
         return this;
       }
 
@@ -795,6 +845,10 @@ public final class SignalServiceProtos {
           to_bitField0_ |= 0x00000040;
         }
         result.content_ = content_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.deliveryTimestamp_ = deliveryTimestamp_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -835,6 +889,9 @@ public final class SignalServiceProtos {
         }
         if (other.hasContent()) {
           setContent(other.getContent());
+        }
+        if (other.hasDeliveryTimestamp()) {
+          setDeliveryTimestamp(other.getDeliveryTimestamp());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1213,6 +1270,39 @@ public final class SignalServiceProtos {
       public Builder clearContent() {
         bitField0_ = (bitField0_ & ~0x00000040);
         content_ = getDefaultInstance().getContent();
+        onChanged();
+        return this;
+      }
+
+      // optional uint64 deliveryTimestamp = 9;
+      private long deliveryTimestamp_ ;
+      /**
+       * <code>optional uint64 deliveryTimestamp = 9;</code>
+       */
+      public boolean hasDeliveryTimestamp() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>optional uint64 deliveryTimestamp = 9;</code>
+       */
+      public long getDeliveryTimestamp() {
+        return deliveryTimestamp_;
+      }
+      /**
+       * <code>optional uint64 deliveryTimestamp = 9;</code>
+       */
+      public Builder setDeliveryTimestamp(long value) {
+        bitField0_ |= 0x00000080;
+        deliveryTimestamp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint64 deliveryTimestamp = 9;</code>
+       */
+      public Builder clearDeliveryTimestamp() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        deliveryTimestamp_ = 0L;
         onChanged();
         return this;
       }
@@ -23104,99 +23194,100 @@ public final class SignalServiceProtos {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\023SignalService.proto\022\rsignalservice\"\375\001\n" +
+      "\n\023SignalService.proto\022\rsignalservice\"\242\002\n" +
       "\010Envelope\022*\n\004type\030\001 \001(\0162\034.signalservice." +
       "Envelope.Type\022\016\n\006source\030\002 \001(\t\022\024\n\014sourceD" +
       "evice\030\007 \001(\r\022\r\n\005relay\030\003 \001(\t\022\021\n\ttimestamp\030" +
       "\005 \001(\004\022\025\n\rlegacyMessage\030\006 \001(\014\022\017\n\007content\030" +
-      "\010 \001(\014\"U\n\004Type\022\013\n\007UNKNOWN\020\000\022\016\n\nCIPHERTEXT" +
-      "\020\001\022\020\n\014KEY_EXCHANGE\020\002\022\021\n\rPREKEY_BUNDLE\020\003\022" +
-      "\013\n\007RECEIPT\020\005\"\204\002\n\007Content\022/\n\013dataMessage\030" +
-      "\001 \001(\0132\032.signalservice.DataMessage\022/\n\013syn" +
-      "cMessage\030\002 \001(\0132\032.signalservice.SyncMessa",
-      "ge\022/\n\013callMessage\030\003 \001(\0132\032.signalservice." +
-      "CallMessage\022/\n\013nullMessage\030\004 \001(\0132\032.signa" +
-      "lservice.NullMessage\0225\n\016receiptMessage\030\005" +
-      " \001(\0132\035.signalservice.ReceiptMessage\"\330\003\n\013" +
-      "CallMessage\022/\n\005offer\030\001 \001(\0132 .signalservi" +
-      "ce.CallMessage.Offer\0221\n\006answer\030\002 \001(\0132!.s" +
-      "ignalservice.CallMessage.Answer\0227\n\ticeUp" +
-      "date\030\003 \003(\0132$.signalservice.CallMessage.I" +
-      "ceUpdate\0221\n\006hangup\030\004 \001(\0132!.signalservice" +
-      ".CallMessage.Hangup\022-\n\004busy\030\005 \001(\0132\037.sign",
-      "alservice.CallMessage.Busy\032(\n\005Offer\022\n\n\002i" +
-      "d\030\001 \001(\004\022\023\n\013description\030\002 \001(\t\032)\n\006Answer\022\n" +
-      "\n\002id\030\001 \001(\004\022\023\n\013description\030\002 \001(\t\032K\n\tIceUp" +
-      "date\022\n\n\002id\030\001 \001(\004\022\016\n\006sdpMid\030\002 \001(\t\022\025\n\rsdpM" +
-      "LineIndex\030\003 \001(\r\022\013\n\003sdp\030\004 \001(\t\032\022\n\004Busy\022\n\n\002" +
-      "id\030\001 \001(\004\032\024\n\006Hangup\022\n\n\002id\030\001 \001(\004\"/\n\021Predef" +
-      "inedAnswers\022\014\n\004type\030\001 \001(\r\022\014\n\004data\030\002 \001(\t\"" +
-      "\306\002\n\013DataMessage\022\014\n\004body\030\001 \001(\t\0225\n\013attachm" +
-      "ents\030\002 \003(\0132 .signalservice.AttachmentPoi" +
-      "nter\022*\n\005group\030\003 \001(\0132\033.signalservice.Grou",
-      "pContext\022\r\n\005flags\030\004 \001(\r\022\023\n\013expireTimer\030\005" +
-      " \001(\r\022\022\n\nprofileKey\030\006 \001(\014\022\021\n\ttimestamp\030\007 " +
-      "\001(\004\022,\n\002pa\030\024 \001(\0132 .signalservice.Predefin" +
-      "edAnswers\"M\n\005Flags\022\017\n\013END_SESSION\020\001\022\033\n\027E" +
-      "XPIRATION_TIMER_UPDATE\020\002\022\026\n\022PROFILE_KEY_" +
-      "UPDATE\020\004\"\036\n\013NullMessage\022\017\n\007padding\030\001 \001(\014" +
-      "\"u\n\016ReceiptMessage\0220\n\004type\030\001 \001(\0162\".signa" +
-      "lservice.ReceiptMessage.Type\022\021\n\ttimestam" +
-      "p\030\002 \003(\004\"\036\n\004Type\022\014\n\010DELIVERY\020\000\022\010\n\004READ\020\001\"" +
-      "\253\001\n\010Verified\022\023\n\013destination\030\001 \001(\t\022\023\n\013ide",
-      "ntityKey\030\002 \001(\014\022,\n\005state\030\003 \001(\0162\035.signalse" +
-      "rvice.Verified.State\022\023\n\013nullMessage\030\004 \001(" +
-      "\014\"2\n\005State\022\013\n\007DEFAULT\020\000\022\014\n\010VERIFIED\020\001\022\016\n" +
-      "\nUNVERIFIED\020\002\"\312\007\n\013SyncMessage\022-\n\004sent\030\001 " +
-      "\001(\0132\037.signalservice.SyncMessage.Sent\0225\n\010" +
-      "contacts\030\002 \001(\0132#.signalservice.SyncMessa" +
-      "ge.Contacts\0221\n\006groups\030\003 \001(\0132!.signalserv" +
-      "ice.SyncMessage.Groups\0223\n\007request\030\004 \001(\0132" +
-      "\".signalservice.SyncMessage.Request\022-\n\004r" +
-      "ead\030\005 \003(\0132\037.signalservice.SyncMessage.Re",
-      "ad\0223\n\007blocked\030\006 \001(\0132\".signalservice.Sync" +
-      "Message.Blocked\022)\n\010verified\030\007 \001(\0132\027.sign" +
-      "alservice.Verified\022?\n\rconfiguration\030\t \001(" +
-      "\0132(.signalservice.SyncMessage.Configurat" +
-      "ion\022\017\n\007padding\030\010 \001(\014\032}\n\004Sent\022\023\n\013destinat" +
-      "ion\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\022+\n\007message\030" +
-      "\003 \001(\0132\032.signalservice.DataMessage\022 \n\030exp" +
-      "irationStartTimestamp\030\004 \001(\004\032S\n\010Contacts\022" +
+      "\010 \001(\014\022\031\n\021deliveryTimestamp\030\t \001(\004\"_\n\004Type" +
+      "\022\013\n\007UNKNOWN\020\000\022\016\n\nCIPHERTEXT\020\001\022\020\n\014KEY_EXC" +
+      "HANGE\020\002\022\021\n\rPREKEY_BUNDLE\020\003\022\013\n\007RECEIPT\020\005\022" +
+      "\010\n\004READ\020\006\"\204\002\n\007Content\022/\n\013dataMessage\030\001 \001" +
+      "(\0132\032.signalservice.DataMessage\022/\n\013syncMe",
+      "ssage\030\002 \001(\0132\032.signalservice.SyncMessage\022" +
+      "/\n\013callMessage\030\003 \001(\0132\032.signalservice.Cal" +
+      "lMessage\022/\n\013nullMessage\030\004 \001(\0132\032.signalse" +
+      "rvice.NullMessage\0225\n\016receiptMessage\030\005 \001(" +
+      "\0132\035.signalservice.ReceiptMessage\"\330\003\n\013Cal" +
+      "lMessage\022/\n\005offer\030\001 \001(\0132 .signalservice." +
+      "CallMessage.Offer\0221\n\006answer\030\002 \001(\0132!.sign" +
+      "alservice.CallMessage.Answer\0227\n\ticeUpdat" +
+      "e\030\003 \003(\0132$.signalservice.CallMessage.IceU" +
+      "pdate\0221\n\006hangup\030\004 \001(\0132!.signalservice.Ca",
+      "llMessage.Hangup\022-\n\004busy\030\005 \001(\0132\037.signals" +
+      "ervice.CallMessage.Busy\032(\n\005Offer\022\n\n\002id\030\001" +
+      " \001(\004\022\023\n\013description\030\002 \001(\t\032)\n\006Answer\022\n\n\002i" +
+      "d\030\001 \001(\004\022\023\n\013description\030\002 \001(\t\032K\n\tIceUpdat" +
+      "e\022\n\n\002id\030\001 \001(\004\022\016\n\006sdpMid\030\002 \001(\t\022\025\n\rsdpMLin" +
+      "eIndex\030\003 \001(\r\022\013\n\003sdp\030\004 \001(\t\032\022\n\004Busy\022\n\n\002id\030" +
+      "\001 \001(\004\032\024\n\006Hangup\022\n\n\002id\030\001 \001(\004\"/\n\021Predefine" +
+      "dAnswers\022\014\n\004type\030\001 \001(\r\022\014\n\004data\030\002 \001(\t\"\306\002\n" +
+      "\013DataMessage\022\014\n\004body\030\001 \001(\t\0225\n\013attachment" +
+      "s\030\002 \003(\0132 .signalservice.AttachmentPointe",
+      "r\022*\n\005group\030\003 \001(\0132\033.signalservice.GroupCo" +
+      "ntext\022\r\n\005flags\030\004 \001(\r\022\023\n\013expireTimer\030\005 \001(" +
+      "\r\022\022\n\nprofileKey\030\006 \001(\014\022\021\n\ttimestamp\030\007 \001(\004" +
+      "\022,\n\002pa\030\024 \001(\0132 .signalservice.PredefinedA" +
+      "nswers\"M\n\005Flags\022\017\n\013END_SESSION\020\001\022\033\n\027EXPI" +
+      "RATION_TIMER_UPDATE\020\002\022\026\n\022PROFILE_KEY_UPD" +
+      "ATE\020\004\"\036\n\013NullMessage\022\017\n\007padding\030\001 \001(\014\"u\n" +
+      "\016ReceiptMessage\0220\n\004type\030\001 \001(\0162\".signalse" +
+      "rvice.ReceiptMessage.Type\022\021\n\ttimestamp\030\002" +
+      " \003(\004\"\036\n\004Type\022\014\n\010DELIVERY\020\000\022\010\n\004READ\020\001\"\253\001\n",
+      "\010Verified\022\023\n\013destination\030\001 \001(\t\022\023\n\013identi" +
+      "tyKey\030\002 \001(\014\022,\n\005state\030\003 \001(\0162\035.signalservi" +
+      "ce.Verified.State\022\023\n\013nullMessage\030\004 \001(\014\"2" +
+      "\n\005State\022\013\n\007DEFAULT\020\000\022\014\n\010VERIFIED\020\001\022\016\n\nUN" +
+      "VERIFIED\020\002\"\312\007\n\013SyncMessage\022-\n\004sent\030\001 \001(\013" +
+      "2\037.signalservice.SyncMessage.Sent\0225\n\010con" +
+      "tacts\030\002 \001(\0132#.signalservice.SyncMessage." +
+      "Contacts\0221\n\006groups\030\003 \001(\0132!.signalservice" +
+      ".SyncMessage.Groups\0223\n\007request\030\004 \001(\0132\".s" +
+      "ignalservice.SyncMessage.Request\022-\n\004read",
+      "\030\005 \003(\0132\037.signalservice.SyncMessage.Read\022" +
+      "3\n\007blocked\030\006 \001(\0132\".signalservice.SyncMes" +
+      "sage.Blocked\022)\n\010verified\030\007 \001(\0132\027.signals" +
+      "ervice.Verified\022?\n\rconfiguration\030\t \001(\0132(" +
+      ".signalservice.SyncMessage.Configuration" +
+      "\022\017\n\007padding\030\010 \001(\014\032}\n\004Sent\022\023\n\013destination" +
+      "\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\022+\n\007message\030\003 \001" +
+      "(\0132\032.signalservice.DataMessage\022 \n\030expira" +
+      "tionStartTimestamp\030\004 \001(\004\032S\n\010Contacts\022.\n\004" +
+      "blob\030\001 \001(\0132 .signalservice.AttachmentPoi",
+      "nter\022\027\n\010complete\030\002 \001(\010:\005false\0328\n\006Groups\022" +
       ".\n\004blob\030\001 \001(\0132 .signalservice.Attachment" +
-      "Pointer\022\027\n\010complete\030\002 \001(\010:\005false\0328\n\006Grou",
-      "ps\022.\n\004blob\030\001 \001(\0132 .signalservice.Attachm" +
-      "entPointer\032\032\n\007Blocked\022\017\n\007numbers\030\001 \003(\t\032\217" +
-      "\001\n\007Request\0225\n\004type\030\001 \001(\0162\'.signalservice" +
-      ".SyncMessage.Request.Type\"M\n\004Type\022\013\n\007UNK" +
-      "NOWN\020\000\022\014\n\010CONTACTS\020\001\022\n\n\006GROUPS\020\002\022\013\n\007BLOC" +
-      "KED\020\003\022\021\n\rCONFIGURATION\020\004\032)\n\004Read\022\016\n\006send" +
-      "er\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\032%\n\rConfigura" +
-      "tion\022\024\n\014readReceipts\030\001 \001(\010\"\316\001\n\021Attachmen" +
-      "tPointer\022\n\n\002id\030\001 \001(\006\022\023\n\013contentType\030\002 \001(" +
-      "\t\022\013\n\003key\030\003 \001(\014\022\014\n\004size\030\004 \001(\r\022\021\n\tthumbnai",
-      "l\030\005 \001(\014\022\016\n\006digest\030\006 \001(\014\022\020\n\010fileName\030\007 \001(" +
-      "\t\022\r\n\005flags\030\010 \001(\r\022\r\n\005width\030\t \001(\r\022\016\n\006heigh" +
-      "t\030\n \001(\r\"\032\n\005Flags\022\021\n\rVOICE_MESSAGE\020\001\"\203\002\n\014" +
-      "GroupContext\022\n\n\002id\030\001 \001(\014\022.\n\004type\030\002 \001(\0162 " +
-      ".signalservice.GroupContext.Type\022\014\n\004name" +
-      "\030\003 \001(\t\022\017\n\007members\030\004 \003(\t\0220\n\006avatar\030\005 \001(\0132" +
-      " .signalservice.AttachmentPointer\022\016\n\006kic" +
-      "ked\0302 \003(\t\"V\n\004Type\022\013\n\007UNKNOWN\020\000\022\n\n\006UPDATE" +
-      "\020\001\022\013\n\007DELIVER\020\002\022\010\n\004QUIT\020\003\022\020\n\014REQUEST_INF" +
-      "O\020\004\022\014\n\010KICK_OUT\0202\"\207\002\n\016ContactDetails\022\016\n\006",
-      "number\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\0224\n\006avatar\030\003 \001" +
-      "(\0132$.signalservice.ContactDetails.Avatar" +
-      "\022\r\n\005color\030\004 \001(\t\022)\n\010verified\030\005 \001(\0132\027.sign" +
-      "alservice.Verified\022\022\n\nprofileKey\030\006 \001(\014\022\017" +
-      "\n\007blocked\030\007 \001(\010\022\023\n\013expireTimer\030\010 \001(\r\032-\n\006" +
-      "Avatar\022\023\n\013contentType\030\001 \001(\t\022\016\n\006length\030\002 " +
-      "\001(\r\"\307\001\n\014GroupDetails\022\n\n\002id\030\001 \001(\014\022\014\n\004name" +
-      "\030\002 \001(\t\022\017\n\007members\030\003 \003(\t\0222\n\006avatar\030\004 \001(\0132" +
-      "\".signalservice.GroupDetails.Avatar\022\024\n\006a" +
-      "ctive\030\005 \001(\010:\004true\022\023\n\013expireTimer\030\006 \001(\r\032-",
-      "\n\006Avatar\022\023\n\013contentType\030\001 \001(\t\022\016\n\006length\030" +
-      "\002 \001(\rBE\n.org.whispersystems.signalservic" +
-      "e.internal.pushB\023SignalServiceProtos"
+      "Pointer\032\032\n\007Blocked\022\017\n\007numbers\030\001 \003(\t\032\217\001\n\007" +
+      "Request\0225\n\004type\030\001 \001(\0162\'.signalservice.Sy" +
+      "ncMessage.Request.Type\"M\n\004Type\022\013\n\007UNKNOW" +
+      "N\020\000\022\014\n\010CONTACTS\020\001\022\n\n\006GROUPS\020\002\022\013\n\007BLOCKED" +
+      "\020\003\022\021\n\rCONFIGURATION\020\004\032)\n\004Read\022\016\n\006sender\030" +
+      "\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\032%\n\rConfiguratio" +
+      "n\022\024\n\014readReceipts\030\001 \001(\010\"\316\001\n\021AttachmentPo" +
+      "inter\022\n\n\002id\030\001 \001(\006\022\023\n\013contentType\030\002 \001(\t\022\013",
+      "\n\003key\030\003 \001(\014\022\014\n\004size\030\004 \001(\r\022\021\n\tthumbnail\030\005" +
+      " \001(\014\022\016\n\006digest\030\006 \001(\014\022\020\n\010fileName\030\007 \001(\t\022\r" +
+      "\n\005flags\030\010 \001(\r\022\r\n\005width\030\t \001(\r\022\016\n\006height\030\n" +
+      " \001(\r\"\032\n\005Flags\022\021\n\rVOICE_MESSAGE\020\001\"\203\002\n\014Gro" +
+      "upContext\022\n\n\002id\030\001 \001(\014\022.\n\004type\030\002 \001(\0162 .si" +
+      "gnalservice.GroupContext.Type\022\014\n\004name\030\003 " +
+      "\001(\t\022\017\n\007members\030\004 \003(\t\0220\n\006avatar\030\005 \001(\0132 .s" +
+      "ignalservice.AttachmentPointer\022\016\n\006kicked" +
+      "\0302 \003(\t\"V\n\004Type\022\013\n\007UNKNOWN\020\000\022\n\n\006UPDATE\020\001\022" +
+      "\013\n\007DELIVER\020\002\022\010\n\004QUIT\020\003\022\020\n\014REQUEST_INFO\020\004",
+      "\022\014\n\010KICK_OUT\0202\"\207\002\n\016ContactDetails\022\016\n\006num" +
+      "ber\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\0224\n\006avatar\030\003 \001(\0132" +
+      "$.signalservice.ContactDetails.Avatar\022\r\n" +
+      "\005color\030\004 \001(\t\022)\n\010verified\030\005 \001(\0132\027.signals" +
+      "ervice.Verified\022\022\n\nprofileKey\030\006 \001(\014\022\017\n\007b" +
+      "locked\030\007 \001(\010\022\023\n\013expireTimer\030\010 \001(\r\032-\n\006Ava" +
+      "tar\022\023\n\013contentType\030\001 \001(\t\022\016\n\006length\030\002 \001(\r" +
+      "\"\307\001\n\014GroupDetails\022\n\n\002id\030\001 \001(\014\022\014\n\004name\030\002 " +
+      "\001(\t\022\017\n\007members\030\003 \003(\t\0222\n\006avatar\030\004 \001(\0132\".s" +
+      "ignalservice.GroupDetails.Avatar\022\024\n\006acti",
+      "ve\030\005 \001(\010:\004true\022\023\n\013expireTimer\030\006 \001(\r\032-\n\006A" +
+      "vatar\022\023\n\013contentType\030\001 \001(\t\022\016\n\006length\030\002 \001" +
+      "(\rBE\n.org.whispersystems.signalservice.i" +
+      "nternal.pushB\023SignalServiceProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -23208,7 +23299,7 @@ public final class SignalServiceProtos {
           internal_static_signalservice_Envelope_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_signalservice_Envelope_descriptor,
-              new java.lang.String[] { "Type", "Source", "SourceDevice", "Relay", "Timestamp", "LegacyMessage", "Content", });
+              new java.lang.String[] { "Type", "Source", "SourceDevice", "Relay", "Timestamp", "LegacyMessage", "Content", "DeliveryTimestamp", });
           internal_static_signalservice_Content_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_signalservice_Content_fieldAccessorTable = new
