@@ -21,6 +21,8 @@ public class OutgoingPushMessage {
   private String content;
   @JsonProperty
   private boolean silent;
+  @JsonProperty
+  private long timestamp; // to use with old read receipts
 
   public OutgoingPushMessage(int type,
                              int destinationDeviceId,
@@ -33,5 +35,16 @@ public class OutgoingPushMessage {
     this.destinationRegistrationId = destinationRegistrationId;
     this.content                   = content;
     this.silent                    = silent;
+    this.timestamp                 = 0;
+  }
+
+  public OutgoingPushMessage withReplacedTimestamp(long timestamp) {
+    this.timestamp = timestamp;
+    return this;
+  }
+
+  public OutgoingPushMessage withReplacedType(int type) {
+    this.type = type;
+    return this;
   }
 }

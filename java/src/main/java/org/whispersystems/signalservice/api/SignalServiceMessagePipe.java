@@ -106,6 +106,31 @@ public class SignalServiceMessagePipe {
     }
   }
 
+  public SendMessageResponse sendRead(OutgoingPushMessageList list) throws IOException {
+    try {
+      WebSocketRequestMessage requestMessage = WebSocketRequestMessage.newBuilder()
+                                                                      .setId(SecureRandom.getInstance("SHA1PRNG").nextLong())
+                                                                      .setVerb("PUT")
+                                                                      .setPath(String.format("/v1/messages/read/%s", list.getDestination()))
+                                                                      .addHeaders("content-type:application/json")
+                                                                      .setBody(ByteString.copyFrom(JsonUtil.toJson(list).getBytes()))
+                                                                      .build();
+
+      Pair<Integer, String> response = websocket.sendRequest(requestMessage).get(10, TimeUnit.SECONDS);
+
+      if (response.first() < 200 || response.first() >= 300) {
+        throw new IOException("Non-successful response: " + response.first());
+      }
+
+      if (Util.isEmpty(response.second())) return new SendMessageResponse(false);
+      else                                 return JsonUtil.fromJson(response.second(), SendMessageResponse.class);
+    } catch (NoSuchAlgorithmException e) {
+      throw new AssertionError(e);
+    } catch (InterruptedException | ExecutionException | TimeoutException e) {
+      throw new IOException(e);
+    }
+  }
+
   public SendMessageResponse send(OutgoingPushMessageList list) throws IOException {
     try {
       WebSocketRequestMessage requestMessage = WebSocketRequestMessage.newBuilder()

@@ -131,8 +131,7 @@ public class SignalServiceMessageSender {
   public void sendReceipt(SignalServiceAddress recipient, SignalServiceReceiptMessage message)
       throws IOException, UntrustedIdentityException
   {
-    byte[] content = createReceiptContent(message);
-    sendMessage(recipient, message.getWhen(), content, true);
+    sendRead(recipient, message.getWhen(), message, true);
   }
 
   /**
@@ -552,6 +551,38 @@ public class SignalServiceMessageSender {
     throw new IOException("Failed to resolve conflicts after 3 attempts!");
   }
 
+  private SendMessageResponse sendRead(SignalServiceAddress recipient, long timestamp, SignalServiceReceiptMessage message, boolean silent)
+          throws UntrustedIdentityException, IOException
+  {
+    for (int i=0;i<3;i++) {
+      try {
+        OutgoingPushMessageList            messages = getEncryptedReadMessages(socket, recipient, timestamp, message, silent);
+        Optional<SignalServiceMessagePipe> pipe     = this.pipe.get();
+
+        if (pipe.isPresent()) {
+          try {
+            Log.w(TAG, "Transmitting over pipe...");
+            return pipe.get().sendRead(messages);
+          } catch (IOException e) {
+            Log.w(TAG, e);
+            Log.w(TAG, "Falling back to new connection...");
+          }
+        }
+
+        Log.w(TAG, "Not transmitting over pipe...");
+        return socket.sendRead(messages);
+      } catch (MismatchedDevicesException mde) {
+        Log.w(TAG, mde);
+        handleMismatchedDevices(socket, recipient, mde.getMismatchedDevices());
+      } catch (StaleDevicesException ste) {
+        Log.w(TAG, ste);
+        handleStaleDevices(recipient, ste.getStaleDevices());
+      }
+    }
+
+    throw new IOException("Failed to resolve conflicts after 3 attempts!");
+  }
+
   private List<AttachmentPointer> createAttachmentPointers(Optional<List<SignalServiceAttachment>> attachments) throws IOException {
     List<AttachmentPointer> pointers = new LinkedList<>();
 
@@ -614,6 +645,42 @@ public class SignalServiceMessageSender {
     return builder.build();
   }
 
+
+  private OutgoingPushMessageList getEncryptedReadMessages(PushServiceSocket socket,
+                                                       SignalServiceAddress recipient,
+                                                       long timestamp,
+                                                       SignalServiceReceiptMessage message,
+                                                       boolean silent)
+      throws IOException, UntrustedIdentityException
+  {
+    List<OutgoingPushMessage> messages = new LinkedList<>();
+
+    byte[] plaintext = createReceiptContent(message);
+
+    for(long readTimestamp: message.getTimestamps()) {
+      if (!recipient.equals(localAddress)) {
+        messages.add(getEncryptedMessage(socket,
+                                         recipient,
+                                         SignalServiceAddress.DEFAULT_DEVICE_ID,
+                                         plaintext,
+                                         silent).withReplacedTimestamp(readTimestamp));
+      }
+    }
+
+    for (int deviceId : store.getSubDeviceSessions(recipient.getNumber())) {
+      if (store.containsSession(new SignalProtocolAddress(recipient.getNumber(), deviceId))) {
+        for(long readTimestamp: message.getTimestamps()) {
+          messages.add(getEncryptedMessage(socket,
+                                           recipient,
+                                           deviceId,
+                                           plaintext,
+                                           silent).withReplacedTimestamp(readTimestamp));
+        }
+      }
+    }
+
+    return new OutgoingPushMessageList(recipient.getNumber(), timestamp, recipient.getRelay().orNull(), messages);
+  }
 
   private OutgoingPushMessageList getEncryptedMessages(PushServiceSocket socket,
                                                        SignalServiceAddress recipient,

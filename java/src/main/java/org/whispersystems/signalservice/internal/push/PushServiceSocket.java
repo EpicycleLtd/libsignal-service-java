@@ -107,6 +107,7 @@ public class PushServiceSocket {
   private static final String DIRECTORY_VERIFY_PATH     = "/v1/directory/%s";
   private static final String MESSAGE_PATH              = "/v1/messages/%s";
   private static final String ACKNOWLEDGE_MESSAGE_PATH  = "/v1/messages/%s/%d";
+  private static final String READ_PATH                 = "/v1/messages/read/%s";
   private static final String ATTACHMENT_PATH           = "/v1/attachments/%s";
 
   private static final String PROFILE_PATH              = "/v1/profile/%s";
@@ -189,6 +190,17 @@ public class PushServiceSocket {
   {
     try {
       String responseText = makeServiceRequest(String.format(MESSAGE_PATH, bundle.getDestination()), "PUT", JsonUtil.toJson(bundle));
+
+      if (responseText == null) return new SendMessageResponse(false);
+      else                      return JsonUtil.fromJson(responseText, SendMessageResponse.class);
+    } catch (NotFoundException nfe) {
+      throw new UnregisteredUserException(bundle.getDestination(), nfe);
+    }
+  }
+
+  public SendMessageResponse sendRead(OutgoingPushMessageList bundle) throws IOException {
+    try {
+      String responseText = makeServiceRequest(String.format(READ_PATH, bundle.getDestination()), "PUT", JsonUtil.toJson(bundle));
 
       if (responseText == null) return new SendMessageResponse(false);
       else                      return JsonUtil.fromJson(responseText, SendMessageResponse.class);
