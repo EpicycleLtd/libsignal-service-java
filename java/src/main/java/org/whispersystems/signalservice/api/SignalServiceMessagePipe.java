@@ -96,13 +96,17 @@ public class SignalServiceMessagePipe {
         if (isSignalServiceEnvelope(request)) {
           SignalServiceEnvelope envelope = new SignalServiceEnvelope(request.getBody().toByteArray(),
                                                                      credentialsProvider.getSignalingKey());
-
+          // Saving a message here and only after saving success we send response
           callback.onMessage(envelope);
+          websocket.sendResponse(response);
           return envelope;
         }
-      } finally {
+        // Not Signal envelope
+        websocket.sendResponse(response);
+      } catch (InvalidVersionException e) {
         websocket.sendResponse(response);
       }
+      return null;
     }
   }
 
