@@ -133,6 +133,11 @@ public class PushServiceSocket {
     return JsonUtil.fromJson(responseText, AuthorizationToken.class).getToken();
   }
 
+  public void createAccount(String hash) throws IOException {
+    String path = CREATE_ACCOUNT_SMS_PATH + "?hash=" + URLEncoder.encode(hash, "UTF-8").replaceAll("%", "%%");
+    makeServiceRequest(String.format(path, credentialsProvider.getUser()), "GET", null);
+  }
+
   public void createAccount(boolean voice) throws IOException {
     String path = voice ? CREATE_ACCOUNT_VOICE_PATH : CREATE_ACCOUNT_SMS_PATH;
     makeServiceRequest(String.format(path, credentialsProvider.getUser()), "GET", null);

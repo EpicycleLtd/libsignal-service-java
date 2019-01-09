@@ -102,6 +102,10 @@ public class SignalServiceAccountManager {
     return this.pushServiceSocket.getDirectoryVerificationToken();
   }
 
+  public void requestSmsVerificationCode(String hash) throws IOException {
+    this.pushServiceSocket.createAccount(hash);
+  }
+
   /**
    * Request an SMS verification code.  On success, the server will send
    * an SMS verification code to this Signal user.
