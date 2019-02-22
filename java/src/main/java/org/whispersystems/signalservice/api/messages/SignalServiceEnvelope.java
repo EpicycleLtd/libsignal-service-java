@@ -202,6 +202,13 @@ public class SignalServiceEnvelope {
     return envelope.getType().getNumber() == Envelope.Type.RECEIPT_VALUE;
   }
 
+  /**
+   * @return true if the containing message is a read receipt.
+   */
+  public boolean isRead() {
+    return envelope.getType().getNumber() == Envelope.Type.READ_VALUE;
+  }
+
   private byte[] getPlaintext(byte[] ciphertext, SecretKeySpec cipherKey) throws IOException {
     try {
       byte[] ivBytes = new byte[IV_LENGTH];

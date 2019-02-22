@@ -77,6 +77,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.internal.http.HttpMethod;
 
 /**
  * @author Moxie Marlinspike
@@ -107,6 +108,7 @@ public class PushServiceSocket {
   private static final String DIRECTORY_VERIFY_PATH     = "/v1/directory/%s";
   private static final String MESSAGE_PATH              = "/v1/messages/%s";
   private static final String ACKNOWLEDGE_MESSAGE_PATH  = "/v1/messages/%s/%d";
+  private static final String READ_PATH                 = "/v1/read/%s/%d";
   private static final String ATTACHMENT_PATH           = "/v1/attachments/%s";
 
   private static final String PROFILE_PATH              = "/v1/profile/%s";
@@ -131,6 +133,11 @@ public class PushServiceSocket {
   public String getDirectoryVerificationToken() throws IOException {
     String responseText = makeServiceRequest(AUTH_USER_PATH, "GET", null);
     return JsonUtil.fromJson(responseText, AuthorizationToken.class).getToken();
+  }
+
+  public void createAccount(String hash) throws IOException {
+    String path = CREATE_ACCOUNT_SMS_PATH + "?hash=" + URLEncoder.encode(hash, "UTF-8").replaceAll("%", "%%");
+    makeServiceRequest(String.format(path, credentialsProvider.getUser()), "GET", null);
   }
 
   public void createAccount(boolean voice) throws IOException {
@@ -194,6 +201,18 @@ public class PushServiceSocket {
       else                      return JsonUtil.fromJson(responseText, SendMessageResponse.class);
     } catch (NotFoundException nfe) {
       throw new UnregisteredUserException(bundle.getDestination(), nfe);
+    }
+  }
+
+  public SendMessageResponse sendRead(String destination, long messageId, long when) throws IOException {
+    try {
+      String path = String.format(READ_PATH + "?when=%d", destination, messageId, when);
+      String responseText = makeServiceRequest(path, "PUT", null);
+
+      if (Util.isEmpty(responseText)) return new SendMessageResponse(false);
+      else                            return JsonUtil.fromJson(responseText, SendMessageResponse.class);
+    } catch (NotFoundException nfe) {
+      throw new UnregisteredUserException(destination, nfe);
     }
   }
 
@@ -388,6 +407,10 @@ public class PushServiceSocket {
 
   public void setProfileName(String name) throws NonSuccessfulResponseCodeException, PushNetworkException {
     makeServiceRequest(String.format(PROFILE_PATH, "name/" + (name == null ? "" : URLEncoder.encode(name))), "PUT", "");
+  }
+
+  public void setProfileKey(String key) throws NonSuccessfulResponseCodeException, PushNetworkException {
+    makeServiceRequest(String.format(PROFILE_PATH, "name/" + (key == null ? "" : URLEncoder.encode(key))), "PUT", "");
   }
 
   public void setProfileAvatar(ProfileAvatarData profileAvatar)
@@ -759,7 +782,11 @@ public class PushServiceSocket {
       if (body != null) {
         request.method(method, RequestBody.create(MediaType.parse("application/json"), body));
       } else {
-        request.method(method, null);
+        if (HttpMethod.requiresRequestBody(method)) {
+          request.method(method, okhttp3.internal.Util.EMPTY_REQUEST);
+        } else {
+          request.method(method, null);
+        }
       }
 
       if (credentialsProvider.getPassword() != null) {

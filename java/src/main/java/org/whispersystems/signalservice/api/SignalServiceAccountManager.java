@@ -17,7 +17,6 @@ import org.whispersystems.libsignal.state.PreKeyRecord;
 import org.whispersystems.libsignal.state.SignedPreKeyRecord;
 import org.whispersystems.libsignal.util.guava.Optional;
 import org.whispersystems.signalservice.api.crypto.ProfileCipher;
-import org.whispersystems.signalservice.api.crypto.ProfileCipherInputStream;
 import org.whispersystems.signalservice.api.crypto.ProfileCipherOutputStream;
 import org.whispersystems.signalservice.api.messages.calls.TurnServerInfo;
 import org.whispersystems.signalservice.api.messages.multidevice.DeviceInfo;
@@ -26,18 +25,15 @@ import org.whispersystems.signalservice.api.push.SignedPreKeyEntity;
 import org.whispersystems.signalservice.api.util.CredentialsProvider;
 import org.whispersystems.signalservice.api.util.StreamDetails;
 import org.whispersystems.signalservice.internal.configuration.SignalServiceConfiguration;
-import org.whispersystems.signalservice.internal.crypto.PaddingInputStream;
 import org.whispersystems.signalservice.internal.crypto.ProvisioningCipher;
 import org.whispersystems.signalservice.internal.push.ProfileAvatarData;
 import org.whispersystems.signalservice.internal.push.PushServiceSocket;
-import org.whispersystems.signalservice.internal.configuration.SignalServiceUrl;
 import org.whispersystems.signalservice.internal.push.http.ProfileCipherOutputStreamFactory;
 import org.whispersystems.signalservice.internal.util.Base64;
 import org.whispersystems.signalservice.internal.util.StaticCredentialsProvider;
 import org.whispersystems.signalservice.internal.util.Util;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
@@ -100,6 +96,10 @@ public class SignalServiceAccountManager {
 
   public String getDirectoryVerificationToken() throws IOException {
     return this.pushServiceSocket.getDirectoryVerificationToken();
+  }
+
+  public void requestSmsVerificationCode(String hash) throws IOException {
+    this.pushServiceSocket.createAccount(hash);
   }
 
   /**
@@ -307,6 +307,11 @@ public class SignalServiceAccountManager {
     }
 
     this.pushServiceSocket.setProfileAvatar(profileAvatarData);
+  }
+
+  public void setProfileKey(byte[] key) throws IOException {
+    String ciphertextName = Base64.encodeBytesWithoutPadding(new ProfileCipher(key).encryptName("".getBytes("UTF-8"), ProfileCipher.NAME_PADDED_LENGTH));
+    this.pushServiceSocket.setProfileKey(ciphertextName);
   }
 
   public void setSoTimeoutMillis(long soTimeoutMillis) {

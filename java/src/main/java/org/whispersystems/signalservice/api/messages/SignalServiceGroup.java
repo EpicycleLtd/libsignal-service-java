@@ -26,12 +26,30 @@ import java.util.List;
 public class SignalServiceGroup {
 
   public enum Type {
-    UNKNOWN,
-    UPDATE,
-    DELIVER,
-    QUIT,
-    REQUEST_INFO,
-    KICK_OUT
+
+    UNKNOWN(0, 0),
+    UPDATE(1, 1),
+    DELIVER(2, 2),
+    QUIT(3, 3),
+    REQUEST_INFO(4, 4),
+    KICK_OUT(5, 50),
+    REQUEST_GROUPS(6, 60);
+
+    private final int index;
+    private final int value;
+
+    Type(int index, int value) {
+      this.index = index;
+      this.value = value;
+    }
+
+    public int getIndex() {
+      return index;
+    }
+
+    public int getValue() {
+      return value;
+    }
   }
 
   private final byte[]                         groupId;

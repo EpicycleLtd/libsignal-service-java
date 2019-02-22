@@ -19,7 +19,6 @@ import org.whispersystems.libsignal.NoSessionException;
 import org.whispersystems.libsignal.SessionCipher;
 import org.whispersystems.libsignal.SignalProtocolAddress;
 import org.whispersystems.libsignal.UntrustedIdentityException;
-import org.whispersystems.libsignal.logging.Log;
 import org.whispersystems.libsignal.protocol.CiphertextMessage;
 import org.whispersystems.libsignal.protocol.PreKeySignalMessage;
 import org.whispersystems.libsignal.protocol.SignalMessage;
@@ -31,6 +30,7 @@ import org.whispersystems.signalservice.api.messages.SignalServiceContent;
 import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage;
 import org.whispersystems.signalservice.api.messages.SignalServiceEnvelope;
 import org.whispersystems.signalservice.api.messages.SignalServiceGroup;
+import org.whispersystems.signalservice.api.messages.SignalServiceInstallMessage;
 import org.whispersystems.signalservice.api.messages.SignalServiceReceiptMessage;
 import org.whispersystems.signalservice.api.messages.calls.AnswerMessage;
 import org.whispersystems.signalservice.api.messages.calls.BusyMessage;
@@ -54,6 +54,7 @@ import org.whispersystems.signalservice.internal.push.SignalServiceProtos.Envelo
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.ReceiptMessage;
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage;
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.Verified;
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos.InstallMessage;
 import org.whispersystems.signalservice.internal.util.Base64;
 
 import java.util.LinkedList;
@@ -136,6 +137,8 @@ public class SignalServiceCipher {
           content = new SignalServiceContent(createCallMessage(message.getCallMessage()));
         } else if (message.hasReceiptMessage()) {
           content = new SignalServiceContent(createReceiptMessage(envelope, message.getReceiptMessage()));
+        } else if (message.hasInstallMessage()) {
+          content = new SignalServiceContent(createNewInstallationMessage(envelope, message.getInstallMessage()));
         }
       }
 
@@ -283,6 +286,16 @@ public class SignalServiceCipher {
     return new SignalServiceReceiptMessage(type, content.getTimestampList(), envelope.getTimestamp());
   }
 
+  private SignalServiceInstallMessage createNewInstallationMessage(SignalServiceEnvelope envelope, InstallMessage content) {
+    SignalServiceInstallMessage.Type type;
+
+    if      (content.getType() == InstallMessage.Type.GROUP_REQUEST)  type = SignalServiceInstallMessage.Type.GROUP_REQUEST;
+    else if (content.getType() == InstallMessage.Type.GROUP_RESPONSE) type = SignalServiceInstallMessage.Type.GROUP_RESPONSE;
+    else                                                              type = SignalServiceInstallMessage.Type.UNKNOWN;
+
+    return new SignalServiceInstallMessage(type, envelope.getTimestamp());
+  }
+
   private SignalServiceGroup createGroupInfo(SignalServiceEnvelope envelope, DataMessage content) {
     if (!content.hasGroup()) return null;
 
@@ -294,6 +307,7 @@ public class SignalServiceCipher {
       case QUIT:         type = SignalServiceGroup.Type.QUIT;         break;
       case REQUEST_INFO: type = SignalServiceGroup.Type.REQUEST_INFO; break;
       case KICK_OUT:     type = SignalServiceGroup.Type.KICK_OUT;     break;
+      case REQUEST_GROUPS: type = SignalServiceGroup.Type.REQUEST_GROUPS; break;
       default:           type = SignalServiceGroup.Type.UNKNOWN;      break;
     }
 

@@ -16,12 +16,14 @@ public class SignalServiceContent {
   private final Optional<SignalServiceSyncMessage>    synchronizeMessage;
   private final Optional<SignalServiceCallMessage>    callMessage;
   private final Optional<SignalServiceReceiptMessage> readMessage;
+  private final Optional<SignalServiceInstallMessage> installMessage;
 
   public SignalServiceContent() {
     this.message            = Optional.absent();
     this.synchronizeMessage = Optional.absent();
     this.callMessage        = Optional.absent();
     this.readMessage        = Optional.absent();
+    this.installMessage     = Optional.absent();
   }
 
   public SignalServiceContent(SignalServiceDataMessage message) {
@@ -29,6 +31,7 @@ public class SignalServiceContent {
     this.synchronizeMessage = Optional.absent();
     this.callMessage        = Optional.absent();
     this.readMessage        = Optional.absent();
+    this.installMessage     = Optional.absent();
   }
 
   public SignalServiceContent(SignalServiceSyncMessage synchronizeMessage) {
@@ -36,6 +39,7 @@ public class SignalServiceContent {
     this.synchronizeMessage = Optional.fromNullable(synchronizeMessage);
     this.callMessage        = Optional.absent();
     this.readMessage        = Optional.absent();
+    this.installMessage     = Optional.absent();
   }
 
   public SignalServiceContent(SignalServiceCallMessage callMessage) {
@@ -43,6 +47,7 @@ public class SignalServiceContent {
     this.synchronizeMessage = Optional.absent();
     this.callMessage        = Optional.of(callMessage);
     this.readMessage        = Optional.absent();
+    this.installMessage     = Optional.absent();
   }
 
   public SignalServiceContent(SignalServiceReceiptMessage receiptMessage) {
@@ -50,6 +55,15 @@ public class SignalServiceContent {
     this.synchronizeMessage = Optional.absent();
     this.callMessage        = Optional.absent();
     this.readMessage        = Optional.of(receiptMessage);
+    this.installMessage     = Optional.absent();
+  }
+
+  public SignalServiceContent(SignalServiceInstallMessage installMessage) {
+    this.message            = Optional.absent();
+    this.synchronizeMessage = Optional.absent();
+    this.callMessage        = Optional.absent();
+    this.readMessage        = Optional.absent();
+    this.installMessage     = Optional.of(installMessage);
   }
 
   public Optional<SignalServiceDataMessage> getDataMessage() {
@@ -66,5 +80,9 @@ public class SignalServiceContent {
 
   public Optional<SignalServiceReceiptMessage> getReceiptMessage() {
     return readMessage;
+  }
+
+  public Optional<SignalServiceInstallMessage> getInstallMessage() {
+    return installMessage;
   }
 }

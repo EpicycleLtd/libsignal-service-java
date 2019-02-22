@@ -23,6 +23,7 @@ import org.whispersystems.signalservice.api.messages.SignalServiceAttachment;
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentStream;
 import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage;
 import org.whispersystems.signalservice.api.messages.SignalServiceGroup;
+import org.whispersystems.signalservice.api.messages.SignalServiceInstallMessage;
 import org.whispersystems.signalservice.api.messages.SignalServiceReceiptMessage;
 import org.whispersystems.signalservice.api.messages.calls.AnswerMessage;
 import org.whispersystems.signalservice.api.messages.calls.IceUpdateMessage;
@@ -48,6 +49,7 @@ import org.whispersystems.signalservice.internal.push.PushAttachmentData;
 import org.whispersystems.signalservice.internal.push.PushServiceSocket;
 import org.whispersystems.signalservice.internal.push.SendMessageResponse;
 import org.whispersystems.signalservice.internal.push.SendMessageResponseList;
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos.InstallMessage;
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.AttachmentPointer;
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.CallMessage;
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.Content;
@@ -133,6 +135,15 @@ public class SignalServiceMessageSender {
   {
     byte[] content = createReceiptContent(message);
     sendMessage(recipient, message.getWhen(), content, true);
+  }
+
+  public void sendOldReceipt(SignalServiceAddress recipient, SignalServiceReceiptMessage message)
+          throws IOException, UntrustedIdentityException
+  {
+    // TODO(s1z): Add bunch of timestamps sending!
+    for (Long timestamp: message.getTimestamps()) {
+      sendRead(recipient, message.getWhen(), timestamp, true);
+    }
   }
 
   /**
@@ -234,6 +245,10 @@ public class SignalServiceMessageSender {
     sendMessage(localAddress, System.currentTimeMillis(), content, false);
   }
 
+  public void sendInstallMessage(List<SignalServiceAddress> addresses, SignalServiceInstallMessage message) throws IOException {
+    sendMessage(addresses, message.getTimestamp(), createInstallContent(message));
+  }
+
   public void setSoTimeoutMillis(long soTimeoutMillis) {
     socket.setSoTimeoutMillis(soTimeoutMillis);
   }
@@ -267,6 +282,17 @@ public class SignalServiceMessageSender {
       byte[] syncMessage = createMultiDeviceVerifiedContent(message, nullMessage.toByteArray());
       sendMessage(localAddress, message.getTimestamp(), syncMessage, false);
     }
+  }
+
+  private byte[] createInstallContent(SignalServiceInstallMessage message) {
+    Content.Builder        container = Content.newBuilder();
+    InstallMessage.Builder install   = InstallMessage.newBuilder();
+
+    if      (message.isGroupRequest())  install.setType(InstallMessage.Type.GROUP_REQUEST);
+    else if (message.isGroupResponse()) install.setType(InstallMessage.Type.GROUP_RESPONSE);
+    else                                install.setType(InstallMessage.Type.UNKNOWN);
+
+    return container.setInstallMessage(install).build().toByteArray();
   }
 
   private byte[] createReceiptContent(SignalServiceReceiptMessage message) throws IOException {
@@ -475,11 +501,12 @@ public class SignalServiceMessageSender {
     builder.setId(ByteString.copyFrom(group.getGroupId()));
 
     if (group.getType() != SignalServiceGroup.Type.DELIVER) {
-      if      (group.getType() == SignalServiceGroup.Type.UPDATE)       builder.setType(GroupContext.Type.UPDATE);
-      else if (group.getType() == SignalServiceGroup.Type.QUIT)         builder.setType(GroupContext.Type.QUIT);
-      else if (group.getType() == SignalServiceGroup.Type.KICK_OUT)     builder.setType(GroupContext.Type.KICK_OUT);
-      else if (group.getType() == SignalServiceGroup.Type.REQUEST_INFO) builder.setType(GroupContext.Type.REQUEST_INFO);
-      else                                                              throw new AssertionError("Unknown type: " + group.getType());
+      if      (group.getType() == SignalServiceGroup.Type.UPDATE)         builder.setType(GroupContext.Type.UPDATE);
+      else if (group.getType() == SignalServiceGroup.Type.QUIT)           builder.setType(GroupContext.Type.QUIT);
+      else if (group.getType() == SignalServiceGroup.Type.KICK_OUT)       builder.setType(GroupContext.Type.KICK_OUT);
+      else if (group.getType() == SignalServiceGroup.Type.REQUEST_INFO)   builder.setType(GroupContext.Type.REQUEST_INFO);
+      else if (group.getType() == SignalServiceGroup.Type.REQUEST_GROUPS) builder.setType(GroupContext.Type.REQUEST_GROUPS);
+      else                                                                throw new AssertionError("Unknown type: " + group.getType());
 
       if (group.getName().isPresent()) builder.setName(group.getName().get());
       if (group.getMembers().isPresent()) builder.addAllMembers(group.getMembers().get());
@@ -540,6 +567,26 @@ public class SignalServiceMessageSender {
 
         Log.w(TAG, "Not transmitting over pipe...");
         return socket.sendMessage(messages);
+      } catch (MismatchedDevicesException mde) {
+        Log.w(TAG, mde);
+        handleMismatchedDevices(socket, recipient, mde.getMismatchedDevices());
+      } catch (StaleDevicesException ste) {
+        Log.w(TAG, ste);
+        handleStaleDevices(recipient, ste.getStaleDevices());
+      }
+    }
+
+    throw new IOException("Failed to resolve conflicts after 3 attempts!");
+  }
+
+  private SendMessageResponse sendRead(SignalServiceAddress recipient, long when, long timestamp, boolean silent)
+          throws UntrustedIdentityException, IOException
+  {
+    for (int i=0;i<3;i++) {
+      try {
+        // TODO(s1z): Add pipe sending!
+        Log.w(TAG, "Not transmitting over pipe...");
+        return socket.sendRead(recipient.getNumber(), timestamp, when);
       } catch (MismatchedDevicesException mde) {
         Log.w(TAG, mde);
         handleMismatchedDevices(socket, recipient, mde.getMismatchedDevices());
