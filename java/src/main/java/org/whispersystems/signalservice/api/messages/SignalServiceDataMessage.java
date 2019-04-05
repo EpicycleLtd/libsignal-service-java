@@ -7,6 +7,7 @@
 package org.whispersystems.signalservice.api.messages;
 
 import org.whispersystems.libsignal.util.guava.Optional;
+import org.whispersystems.signalservice.api.push.SignalServiceAddress;
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.PredefinedAnswers;
 
 import java.util.LinkedList;
@@ -17,23 +18,24 @@ import java.util.List;
  */
 public class SignalServiceDataMessage {
 
-  private final long                                    timestamp;
+  private final long timestamp;
   private final Optional<List<SignalServiceAttachment>> attachments;
-  private final Optional<String>                        body;
-  private final Optional<SignalServiceGroup>            group;
-  private final Optional<byte[]>                        profileKey;
-  private final boolean                                 endSession;
-  private final boolean                                 expirationUpdate;
-  private final int                                     expiresInSeconds;
-  private final boolean                                 profileKeyUpdate;
-  private final Optional<PredefinedAnswers>             predefinedAnswers;
+  private final Optional<String> body;
+  private final Optional<SignalServiceGroup> group;
+  private final Optional<byte[]> profileKey;
+  private final boolean endSession;
+  private final boolean expirationUpdate;
+  private final int expiresInSeconds;
+  private final boolean profileKeyUpdate;
+  private final Optional<PredefinedAnswers> predefinedAnswers;
+  private final Optional<Quote> quote;
 
 
   /**
    * Construct a SignalServiceDataMessage with a body and no attachments.
    *
    * @param timestamp The sent timestamp.
-   * @param body The message contents.
+   * @param body      The message contents.
    */
   public SignalServiceDataMessage(long timestamp, String body) {
     this(timestamp, body, 0);
@@ -42,25 +44,27 @@ public class SignalServiceDataMessage {
   /**
    * Construct an expiring SignalServiceDataMessage with a body and no attachments.
    *
-   * @param timestamp The sent timestamp.
-   * @param body The message contents.
+   * @param timestamp        The sent timestamp.
+   * @param body             The message contents.
    * @param expiresInSeconds The number of seconds in which the message should expire after having been seen.
    */
   public SignalServiceDataMessage(long timestamp, String body, int expiresInSeconds) {
-    this(timestamp, (List<SignalServiceAttachment>)null, body, expiresInSeconds);
+    this(timestamp, (List<SignalServiceAttachment>) null, body, expiresInSeconds);
   }
 
 
   public SignalServiceDataMessage(final long timestamp, final SignalServiceAttachment attachment, final String body) {
-    this(timestamp, new LinkedList<SignalServiceAttachment>() {{add(attachment);}}, body);
+    this(timestamp, new LinkedList<SignalServiceAttachment>() {{
+      add(attachment);
+    }}, body);
   }
 
   /**
    * Construct a SignalServiceDataMessage with a body and list of attachments.
    *
-   * @param timestamp The sent timestamp.
+   * @param timestamp   The sent timestamp.
    * @param attachments The attachments.
-   * @param body The message contents.
+   * @param body        The message contents.
    */
   public SignalServiceDataMessage(long timestamp, List<SignalServiceAttachment> attachments, String body) {
     this(timestamp, attachments, body, 0);
@@ -69,9 +73,9 @@ public class SignalServiceDataMessage {
   /**
    * Construct an expiring SignalServiceDataMessage with a body and list of attachments.
    *
-   * @param timestamp The sent timestamp.
-   * @param attachments The attachments.
-   * @param body The message contents.
+   * @param timestamp        The sent timestamp.
+   * @param attachments      The attachments.
+   * @param body             The message contents.
    * @param expiresInSeconds The number of seconds in which the message should expire after having been seen.
    */
   public SignalServiceDataMessage(long timestamp, List<SignalServiceAttachment> attachments, String body, int expiresInSeconds) {
@@ -81,10 +85,10 @@ public class SignalServiceDataMessage {
   /**
    * Construct a SignalServiceDataMessage group message with attachments and body.
    *
-   * @param timestamp The sent timestamp.
-   * @param group The group information.
+   * @param timestamp   The sent timestamp.
+   * @param group       The group information.
    * @param attachments The attachments.
-   * @param body The message contents.
+   * @param body        The message contents.
    */
   public SignalServiceDataMessage(long timestamp, SignalServiceGroup group, List<SignalServiceAttachment> attachments, String body) {
     this(timestamp, group, attachments, body, 0);
@@ -94,41 +98,42 @@ public class SignalServiceDataMessage {
   /**
    * Construct an expiring SignalServiceDataMessage group message with attachments and body.
    *
-   * @param timestamp The sent timestamp.
-   * @param group The group information.
-   * @param attachments The attachments.
-   * @param body The message contents.
+   * @param timestamp        The sent timestamp.
+   * @param group            The group information.
+   * @param attachments      The attachments.
+   * @param body             The message contents.
    * @param expiresInSeconds The number of seconds in which a message should disappear after having been seen.
    */
   public SignalServiceDataMessage(long timestamp, SignalServiceGroup group, List<SignalServiceAttachment> attachments, String body, int expiresInSeconds) {
-    this(timestamp, group, attachments, body, false, expiresInSeconds, false, null, false, null);
+    this(timestamp, group, attachments, body, false, expiresInSeconds, false, null, false, null, null);
   }
 
   /**
    * Construct a SignalServiceDataMessage.
    *
-   * @param timestamp The sent timestamp.
-   * @param group The group information (or null if none).
-   * @param attachments The attachments (or null if none).
-   * @param body The message contents.
-   * @param endSession Flag indicating whether this message should close a session.
-   * @param expiresInSeconds Number of seconds in which the message should disappear after being seen.
+   * @param timestamp         The sent timestamp.
+   * @param group             The group information (or null if none).
+   * @param attachments       The attachments (or null if none).
+   * @param body              The message contents.
+   * @param endSession        Flag indicating whether this message should close a session.
+   * @param expiresInSeconds  Number of seconds in which the message should disappear after being seen.
    * @param predefinedAnswers {@link PredefinedAnswers}
    */
   public SignalServiceDataMessage(long timestamp, SignalServiceGroup group,
                                   List<SignalServiceAttachment> attachments,
                                   String body, boolean endSession, int expiresInSeconds,
                                   boolean expirationUpdate, byte[] profileKey,
-                                  boolean profileKeyUpdate, Optional<PredefinedAnswers> predefinedAnswers)
-  {
-    this.timestamp        = timestamp;
-    this.body             = Optional.fromNullable(body);
-    this.group            = Optional.fromNullable(group);
-    this.endSession       = endSession;
+                                  boolean profileKeyUpdate, Optional<PredefinedAnswers> predefinedAnswers,
+                                  Quote quote) {
+    this.timestamp = timestamp;
+    this.body = Optional.fromNullable(body);
+    this.group = Optional.fromNullable(group);
+    this.endSession = endSession;
     this.expiresInSeconds = expiresInSeconds;
     this.expirationUpdate = expirationUpdate;
-    this.profileKey       = Optional.fromNullable(profileKey);
+    this.profileKey = Optional.fromNullable(profileKey);
     this.profileKeyUpdate = profileKeyUpdate;
+    this.quote = Optional.fromNullable(quote);
 
     if (attachments != null && !attachments.isEmpty()) {
       this.attachments = Optional.of(attachments);
@@ -198,20 +203,26 @@ public class SignalServiceDataMessage {
     return predefinedAnswers;
   }
 
+  public Optional<Quote> getQuote() {
+    return quote;
+  }
+
   public static class Builder {
 
     private List<SignalServiceAttachment> attachments = new LinkedList<>();
-    private long               timestamp;
+    private long timestamp;
     private SignalServiceGroup group;
-    private String             body;
-    private boolean            endSession;
-    private int                expiresInSeconds;
-    private boolean            expirationUpdate;
-    private byte[]             profileKey;
-    private boolean            profileKeyUpdate;
-    private Optional<PredefinedAnswers>  predefinedAnswers;
+    private String body;
+    private boolean endSession;
+    private int expiresInSeconds;
+    private boolean expirationUpdate;
+    private byte[] profileKey;
+    private boolean profileKeyUpdate;
+    private Optional<PredefinedAnswers> predefinedAnswers;
+    private Quote quote;
 
-    private Builder() {}
+    private Builder() {
+    }
 
     public Builder withTimestamp(long timestamp) {
       this.timestamp = timestamp;
@@ -276,11 +287,70 @@ public class SignalServiceDataMessage {
       return this;
     }
 
+    public Builder withQuote(Quote quote) {
+      this.quote = quote;
+      return this;
+    }
+
     public SignalServiceDataMessage build() {
       if (timestamp == 0) timestamp = System.currentTimeMillis();
       return new SignalServiceDataMessage(timestamp, group, attachments, body, endSession,
-                                          expiresInSeconds, expirationUpdate, profileKey,
-                                          profileKeyUpdate, predefinedAnswers);
+              expiresInSeconds, expirationUpdate, profileKey,
+              profileKeyUpdate, predefinedAnswers, quote);
+    }
+  }
+
+  public static class Quote {
+    private final long id;
+    private final SignalServiceAddress author;
+    private final String text;
+    private final List<QuotedAttachment> attachments;
+
+    public Quote(long id, SignalServiceAddress author, String text, List<QuotedAttachment> attachments) {
+      this.id = id;
+      this.author = author;
+      this.text = text;
+      this.attachments = attachments;
+    }
+
+    public long getId() {
+      return id;
+    }
+
+    public SignalServiceAddress getAuthor() {
+      return author;
+    }
+
+    public String getText() {
+      return text;
+    }
+
+    public List<QuotedAttachment> getAttachments() {
+      return attachments;
+    }
+
+    public static class QuotedAttachment {
+      private final String contentType;
+      private final String fileName;
+      private final SignalServiceAttachment thumbnail;
+
+      public QuotedAttachment(String contentType, String fileName, SignalServiceAttachment thumbnail) {
+        this.contentType = contentType;
+        this.fileName = fileName;
+        this.thumbnail = thumbnail;
+      }
+
+      public String getContentType() {
+        return contentType;
+      }
+
+      public String getFileName() {
+        return fileName;
+      }
+
+      public SignalServiceAttachment getThumbnail() {
+        return thumbnail;
+      }
     }
   }
 }

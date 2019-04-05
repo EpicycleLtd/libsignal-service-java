@@ -346,6 +346,31 @@ public class SignalServiceMessageSender {
       builder.setProfileKey(ByteString.copyFrom(message.getProfileKey().get()));
     }
 
+    if (message.getQuote().isPresent()) {
+      DataMessage.Quote.Builder quoteBuilder = DataMessage.Quote.newBuilder()
+              .setId(message.getQuote().get().getId())
+              .setAuthor(message.getQuote().get().getAuthor().getNumber())
+              .setText(message.getQuote().get().getText());
+
+      for (SignalServiceDataMessage.Quote.QuotedAttachment attachment : message.getQuote().get().getAttachments()) {
+        DataMessage.Quote.QuotedAttachment.Builder quotedAttachment = DataMessage.Quote.QuotedAttachment.newBuilder();
+
+        quotedAttachment.setContentType(attachment.getContentType());
+
+        if (attachment.getFileName() != null) {
+          quotedAttachment.setFileName(attachment.getFileName());
+        }
+
+        if (attachment.getThumbnail() != null) {
+          quotedAttachment.setThumbnail(createAttachmentPointer(attachment.getThumbnail().asStream()));
+        }
+
+        quoteBuilder.addAttachments(quotedAttachment);
+      }
+
+      builder.setQuote(quoteBuilder);
+    }
+
     builder.setTimestamp(message.getTimestamp());
 
     return container.setDataMessage(builder).build().toByteArray();
